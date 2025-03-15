@@ -54,7 +54,7 @@ Route::get('/exercise/add', [ExerciseController::class, 'add'])->name('exercise.
 Route::put('/exercise/store', [ExerciseController::class, 'store'])->name('exercise.store');
 Route::get('/exercise/{exercises}/edit', [ExerciseController::class, 'edit'])->name('exercise.edit');
 Route::delete('/exercise/{exercises}', [ExerciseController::class, 'destroy'])->name('exercise.destroy');
-Route::patch('/exercise/{exercises}', [ExerciseController::class, 'update'])->name('equipexerciseent.update');
+Route::patch('/exercise/{exercises}', [ExerciseController::class, 'update'])->name('exercise.update');
 
 
 require __DIR__ . '/auth.php';

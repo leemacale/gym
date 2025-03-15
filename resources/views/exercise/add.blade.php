@@ -18,13 +18,13 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div>
-                    <x-input-label for="category" :value="__('Category')" />
-                    <select name="category" class="block w-full mt-1">
+                    <x-input-label for="category_id" :value="__('Category')" />
+                    <select name="category_id" class="block w-full mt-1">
                         @foreach ($category as $categories)
                             <option value="{{ $categories->id }}">{{ $categories->name }}</option>
                         @endforeach
                     </select>
-                    <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -32,4 +32,9 @@
 
                     <x-primary-button class="ms-4">
                         {{ __('Add') }}
-                    </x-primar
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</x-app-layout>

@@ -28,7 +28,10 @@ class ExerciseController extends Controller
      */
     public function add()
     {
-        return view('exercise.add');
+        $category = Category::get();
+        return view('exercise.add', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -58,24 +61,43 @@ class ExerciseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exercise $exercise)
+    public function edit(Exercise $exercises)
     {
         //
+        $category = Category::get();
+        return view('exercise.edit', [
+            'exercises' => $exercises,
+            'category' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exercise $exercise)
+    public function update(Request $request, Exercise $exercises)
     {
         //
+
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'string', 'max:255']
+        ]);
+
+        $exercises->update($validated);
+
+        return redirect(route('exercise.index'))->with('message', 'Exercise updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exercise $exercise)
+    public function destroy(Exercise $exercises)
     {
         //
+
+        $exercises->delete();
+
+        return redirect(route('exercise.index'))->with('message', 'Exercise deleted successfully!');
     }
 }

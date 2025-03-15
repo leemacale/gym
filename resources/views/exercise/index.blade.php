@@ -3,7 +3,7 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Equipment') }}
+                    {{ __('Exercise') }}
                 </h2>
                 <x-bladewind::button color="gray" icon="plus"
                     onclick="window.location='{{ route('exercise.add') }}'">Add</x-bladewind::button>

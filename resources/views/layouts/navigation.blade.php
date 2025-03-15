@@ -15,19 +15,20 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-
-                    <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
-                        {{ __('Category') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory*')">
-                        {{ __('Inventory') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('equipment.index')" :active="request()->routeIs('equipment*')">
-                        {{ __('Equipment') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('exercise.index')" :active="request()->routeIs('exercise*')">
-                        {{ __('Exercise') }}
-                    </x-nav-link>
+                    @if (Auth::user()->role == 'admin')
+                        <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
+                            {{ __('Category') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory*')">
+                            {{ __('Inventory') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('equipment.index')" :active="request()->routeIs('equipment*')">
+                            {{ __('Equipment') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('exercise.index')" :active="request()->routeIs('exercise*')">
+                            {{ __('Exercise') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
