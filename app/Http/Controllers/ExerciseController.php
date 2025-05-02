@@ -44,8 +44,17 @@ class ExerciseController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'string', 'max:255'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        Exercise::create($validated);
+
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        Exercise::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'image' => 'images/' . $imageName,
+        ]);
 
         return redirect(route('exercise.index', absolute: false))->with('message', 'Exercise created successfully!');
     }
@@ -95,7 +104,7 @@ class ExerciseController extends Controller
     public function destroy(Exercise $exercises)
     {
         //
-
+        unlink($exercises->image);
         $exercises->delete();
 
         return redirect(route('exercise.index'))->with('message', 'Exercise deleted successfully!');

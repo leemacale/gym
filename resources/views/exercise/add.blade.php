@@ -7,7 +7,7 @@
                 </h2>
 
             </x-slot>
-            <form method="POST" action="{{ route(name: 'exercise.store') }}">
+            <form method="POST" action="{{ route(name: 'exercise.store') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <!-- Name -->
@@ -25,6 +25,13 @@
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="image" :value="__('Exercise Image')" />
+                    <x-text-input id="image" class="block w-full mt-1" type="file" name="image"
+                        :value="old('image')" required autofocus autocomplete="image" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">

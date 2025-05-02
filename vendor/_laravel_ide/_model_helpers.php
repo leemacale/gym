@@ -928,6 +928,7 @@ namespace App\Models {
     /**
      * App\Models\Exercise
      *
+     * @property string|null $image
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property mixed $category_id
@@ -939,6 +940,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise whereCategoryId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise whereImage($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Exercise>|Exercise query()

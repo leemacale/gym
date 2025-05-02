@@ -10,7 +10,8 @@ class Exercise extends Model
     //
     protected $fillable = [
         'name',
-        'category_id'
+        'category_id',
+        'image'
     ];
 
     public function category(): BelongsTo
