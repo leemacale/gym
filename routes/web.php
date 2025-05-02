@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -57,4 +59,18 @@ Route::delete('/exercise/{exercises}', [ExerciseController::class, 'destroy'])->
 Route::patch('/exercise/{exercises}', [ExerciseController::class, 'update'])->name('exercise.update');
 
 
+
+
+// workout
+Route::get('/workout', [WorkoutController::class, 'index'])->name('workout.index');
+Route::get('/workout/add', [WorkoutController::class, 'add'])->name('workout.add');
+Route::put('/workout/store', [WorkoutController::class, 'store'])->name('workout.store');
+Route::get('/workout/{exercises}/addlog', [WorkoutController::class, 'addlog'])->name('workout.addlog');
+Route::get('/workout/{workouts}/edit', [WorkoutController::class, 'edit'])->name('workout.edit');
+Route::delete('/workout/{workouts}', [WorkoutController::class, 'destroy'])->name('workout.destroy');
+Route::patch('/workout/{workouts}', [WorkoutController::class, 'update'])->name('workout.update');
+
+
+// workout
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 require __DIR__ . '/auth.php';
