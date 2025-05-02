@@ -9,6 +9,8 @@ class Equipment extends Model
     //
     protected $fillable = [
         'name',
-        'quantity'
+        'quantity',
+        'description',
+        'image'
     ];
 }

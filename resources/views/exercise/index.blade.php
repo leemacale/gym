@@ -19,12 +19,14 @@
                 <x-slot name="header">
                     <th>Name</th>
                     <th>Category</th>
+                    <th>Image</th>
                     <th></th>
                 </x-slot>
                 @foreach ($exercise as $exercises)
                     <tr>
                         <td>{{ $exercises->name }}</td>
                         <td>{{ $exercises->category->name }}</td>
+                        <td><img src="{{ $exercises->image }}" alt="" height="200px" width="200px"></td>
                         <td>
                             <form method="POST" action="{{ route('exercise.destroy', $exercises->id) }}">
                                 @csrf

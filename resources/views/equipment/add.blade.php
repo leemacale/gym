@@ -7,7 +7,7 @@
                 </h2>
 
             </x-slot>
-            <form method="POST" action="{{ route(name: 'equipment.store') }}">
+            <form method="POST" action="{{ route(name: 'equipment.store') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <!-- Name -->
@@ -18,10 +18,23 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div>
+                    <x-input-label for="description" :value="__('Description')" />
+                    <x-text-input id="description" class="block w-full mt-1" type="text" name="description"
+                        :value="old('description')" required autofocus autocomplete="description" />
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                </div>
+                <div>
                     <x-input-label for="quantity" :value="__('Quantity')" />
                     <x-text-input id="quantity" class="block w-full mt-1" type="number" name="quantity"
                         :value="old('quantity')" required autofocus autocomplete="quantity" />
                     <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="image" :value="__('Exercise Image')" />
+                    <x-text-input id="image" class="block w-full mt-1" type="file" name="image"
+                        :value="old('image')" required autofocus autocomplete="image" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">

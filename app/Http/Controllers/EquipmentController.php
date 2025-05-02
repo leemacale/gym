@@ -38,8 +38,19 @@ class EquipmentController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'quantity' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        Equipment::create($validated);
+
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        Equipment::create([
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+            'description' => $request->description,
+            'image' => 'images/' . $imageName,
+        ]);
 
         return redirect(route('equipment.index', absolute: false))->with('message', 'Equipment created successfully!');
     }
@@ -87,7 +98,7 @@ class EquipmentController extends Controller
     public function destroy(Equipment $equipments)
     {
         //
-
+        unlink($equipments->image);
         $equipments->delete();
 
         return redirect(route('equipment.index'))->with('message', 'Equipment deleted successfully!');
