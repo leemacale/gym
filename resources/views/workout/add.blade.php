@@ -13,16 +13,27 @@
                 <x-slot name="header">
                     <th>Name</th>
                     <th>Category</th>
+                    <th>Image</th>
+                    <th>Equipment</th>
+
                     <th></th>
                 </x-slot>
                 @foreach ($exercise as $exercises)
                     <tr>
                         <td>{{ $exercises->name }}</td>
                         <td>{{ $exercises->category->name }}</td>
+                        <td><img src="{{ $exercises->image }}" alt="" height="200px" width="200px"></td>
+                        <td>
+                            @foreach ($exercises->equipment as $equipment)
+                                <a
+                                    href="/equipment/{{ $equipment->equipment->id }}/views">{{ $equipment->equipment->name }}</a>,
+                            @endforeach
+                        </td>
                         <td>
 
                             <x-bladewind::button color="gray" icon="plus" title="add"
                                 onclick="window.location='{{ route('workout.addlog', $exercises->id) }}'">Add</x-bladewind::button>
+
 
                         </td>
                     </tr>

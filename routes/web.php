@@ -49,6 +49,14 @@ Route::get('/equipment/{equipments}/edit', [EquipmentController::class, 'edit'])
 Route::delete('/equipment/{equipments}', [EquipmentController::class, 'destroy'])->name('equipment.destroy');
 Route::patch('/equipment/{equipments}', [EquipmentController::class, 'update'])->name('equipment.update');
 
+Route::get('/equipment/{equipments}/qr', [EquipmentController::class, 'qr'])->name('equipment.qr');
+Route::get('/equipment/{equipments}/views', [EquipmentController::class, 'views'])->name('equipment.views');
+
+Route::get('/equipment/{equipments}/exercises', [EquipmentController::class, 'exercises'])->name('equipment.exercises');
+Route::get('/equipment/{equipments}/addexercises', [EquipmentController::class, 'addexercises'])->name('equipment.addexercises');
+Route::put('/equipment/storeexercise', [EquipmentController::class, 'storeexercise'])->name('equipment.storeexercise');
+Route::delete('/equipment/{exercises}/destroy2', [EquipmentController::class, 'destroy2'])->name('equipment.destroy2');
+
 
 // exercise
 Route::get('/exercise', [ExerciseController::class, 'index'])->name('exercise.index');

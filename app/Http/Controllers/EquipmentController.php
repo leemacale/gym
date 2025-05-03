@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
+use App\Models\Exercise;
+use App\Models\LinkExercise;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -55,6 +57,22 @@ class EquipmentController extends Controller
         return redirect(route('equipment.index', absolute: false))->with('message', 'Equipment created successfully!');
     }
 
+
+    public function storeexercise(Request $request)
+    {
+        //
+
+        $validated = $request->validate([
+            'exercise_id' => ['required', 'string', 'max:255'],
+            'equipment_id' => ['required', 'string', 'max:255'],
+
+        ]);
+
+
+        LinkExercise::create($validated);
+
+        return redirect(route('equipment.exercises', $request->equipment_id))->with('message', 'exercise  added successfully!');
+    }
     /**
      * Display the specified resource.
      */
@@ -74,6 +92,52 @@ class EquipmentController extends Controller
             'equipments' => $equipments,
         ]);
     }
+
+
+    public function qr(Equipment $equipments)
+    {
+        //
+
+        return view('equipment.qr', [
+            'equipments' => $equipments,
+        ]);
+    }
+
+    public function views(Equipment $equipments)
+    {
+        //
+        $linkexercise = LinkExercise::where('equipment_id', $equipments->id)->get();
+        return view('equipment.view', [
+            'equipments' => $equipments,
+            'linkexercise' => $linkexercise,
+        ]);
+    }
+
+
+    public function exercises(Equipment $equipments)
+    {
+        //
+
+        $linkexercise = LinkExercise::where('equipment_id', $equipments->id)->get();
+
+        return view('equipment.exercises', [
+            'equipments' => $equipments,
+            'linkexercise' => $linkexercise,
+        ]);
+    }
+
+    public function addexercises(Equipment $equipments)
+    {
+        //
+
+        $exercises = Exercise::get();
+
+        return view('equipment.addexercises', [
+            'equipments' => $equipments,
+            'exercise' => $exercises,
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -102,5 +166,13 @@ class EquipmentController extends Controller
         $equipments->delete();
 
         return redirect(route('equipment.index'))->with('message', 'Equipment deleted successfully!');
+    }
+
+    public function destroy2(LinkExercise $exercises)
+    {
+
+        $exercises->delete();
+
+        return redirect(route('equipment.exercises', $exercises->equipment_id));
     }
 }

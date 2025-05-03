@@ -3,7 +3,7 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Exercise') }}
+                    {{ __('Add exercises to ') }} {{ $equipments->name }}
                 </h2>
                 <x-bladewind::button color="gray" icon="plus"
                     onclick="window.location='{{ route('exercise.add') }}'">Add</x-bladewind::button>
@@ -20,28 +20,23 @@
                     <th>Name</th>
                     <th>Category</th>
                     <th>Image</th>
-                    <th>Equipments</th>
                     <th></th>
                 </x-slot>
                 @foreach ($exercise as $exercises)
                     <tr>
                         <td>{{ $exercises->name }}</td>
                         <td>{{ $exercises->category->name }}</td>
-                        <td><img src="{{ asset($exercises->image) }}" alt="" height="200px" width="200px"></td>
-                        <td>
-                            @foreach ($exercises->equipment as $equipment)
-                                <a
-                                    href="/equipment/{{ $equipment->equipment->id }}/views">{{ $equipment->equipment->name }}</a>,
-                            @endforeach
+                        <td><img src="{{ asset($exercises->image) }}" alt="" height="200px" width="200px">
                         </td>
                         <td>
-                            <form method="POST" action="{{ route('exercise.destroy', $exercises->id) }}">
+                            <form method="POST" action="{{ route('equipment.storeexercise') }}">
                                 @csrf
-                                @method('DELETE')
-                                <x-bladewind::button color="gray" icon="pencil-square" title="edit"
-                                    onclick="window.location='{{ route('exercise.edit', $exercises->id) }}'">EDIT</x-bladewind::button>
-                                <x-bladewind::button color="gray" icon="trash" title="delete"
-                                    can_submit="true">DELETE</x-bladewind::button>
+                                @method('PUT')
+
+                                <input type="hidden" name="exercise_id" value="{{ $exercises->id }}">
+                                <input type="hidden" name="equipment_id" value="{{ $equipments->id }}">
+                                <x-bladewind::button color="gray" icon="plus" title="add"
+                                    can_submit="true">ADD</x-bladewind::button>
                             </form>
                         </td>
                     </tr>
