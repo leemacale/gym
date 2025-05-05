@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/equipment/{equipments}/views', [EquipmentController::class, 'views'])->name('equipment.views');
 });
 
 // category
@@ -50,7 +52,7 @@ Route::delete('/equipment/{equipments}', [EquipmentController::class, 'destroy']
 Route::patch('/equipment/{equipments}', [EquipmentController::class, 'update'])->name('equipment.update');
 
 Route::get('/equipment/{equipments}/qr', [EquipmentController::class, 'qr'])->name('equipment.qr');
-Route::get('/equipment/{equipments}/views', [EquipmentController::class, 'views'])->name('equipment.views');
+
 
 Route::get('/equipment/{equipments}/exercises', [EquipmentController::class, 'exercises'])->name('equipment.exercises');
 Route::get('/equipment/{equipments}/addexercises', [EquipmentController::class, 'addexercises'])->name('equipment.addexercises');
