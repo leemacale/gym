@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,24 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
+
+    public function members(): View
+    {
+
+        $member = User::where('role', 'user')->get();
+        return view('members.index', [
+            'member' => $member,
+        ]);
+    }
+
+    public function approve(User $members)
+    {
+
+        $members->update(['type' => 'Member']);
+
+        return redirect(route('members.index'));
+    }
+
 
     /**
      * Update the user's profile information.

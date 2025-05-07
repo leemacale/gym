@@ -23,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/equipment/{equipments}/views', [EquipmentController::class, 'views'])->name('equipment.views');
+
+    //user
+
+    Route::get('/members', [ProfileController::class, 'members'])->name('members.index');
+    Route::get('/members/{members}/approve', [ProfileController::class, 'approve'])->name('members.approve');
 });
 
 // category
