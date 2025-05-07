@@ -14,6 +14,7 @@ class workout extends Model
         'reps',
         'date',
         'user_id',
+        'weight',
     ];
 
 

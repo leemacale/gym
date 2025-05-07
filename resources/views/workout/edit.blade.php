@@ -7,19 +7,25 @@
                 </h2>
 
             </x-slot>
-            <form method="POST" action="{{ route(name: 'workout.update') }}">
+            <form method="POST" action="{{ route('workout.update', $workouts->id) }}">
                 @csrf
-                @method('PUT')
+                @method('patch')
 
 
-                <h1><b>{{ $exercise->name }}</b></h1>
+                <h1><b>{{ $workouts->exercise->name }}</b></h1>
                 <hr><br>
                 <!-- Name -->
                 <div>
-                    <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
+                    <input type="hidden" name="exercise_id" value="{{ $workouts->exercise->id }}">
+
+                    <x-input-label for="weight" :value="__('Weight (kg)')" />
+                    <x-text-input id="weight" class="block w-full mt-1" type="number" name="weight"
+                        :value="old('weight', $workouts->weight)" required autofocus autocomplete="weight" />
+                    <x-input-error :messages="$errors->get('weight')" class="mt-2" />
+
                     <x-input-label for="reps" :value="__('Reps')" />
                     <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
-                        :value="old('reps')" required autofocus autocomplete="reps" />
+                        :value="old('reps', $workouts->reps)" required autofocus autocomplete="reps" />
                     <x-input-error :messages="$errors->get('reps')" class="mt-2" />
                 </div>
 
@@ -28,7 +34,7 @@
 
 
                     <x-primary-button class="ms-4">
-                        {{ __('Add') }}
+                        {{ __('Update') }}
                     </x-primary-button>
                 </div>
             </form>

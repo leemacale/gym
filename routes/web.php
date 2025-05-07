@@ -78,8 +78,10 @@ Route::patch('/exercise/{exercises}', [ExerciseController::class, 'update'])->na
 
 // workout
 Route::get('/workout', [WorkoutController::class, 'index'])->name('workout.index');
+
 Route::get('/workout/add', [WorkoutController::class, 'add'])->name('workout.add');
 Route::put('/workout/store', [WorkoutController::class, 'store'])->name('workout.store');
+Route::put('/workout/copy', [WorkoutController::class, 'copy'])->name('workout.copy');
 Route::get('/workout/{exercises}/addlog', [WorkoutController::class, 'addlog'])->name('workout.addlog');
 Route::get('/workout/{workouts}/edit', [WorkoutController::class, 'edit'])->name('workout.edit');
 Route::delete('/workout/{workouts}', [WorkoutController::class, 'destroy'])->name('workout.destroy');

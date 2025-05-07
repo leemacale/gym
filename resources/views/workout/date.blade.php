@@ -3,11 +3,7 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    @if ($date != '')
-                        {{ __($date . ' Workout') }}
-                    @else
-                        {{ __('Todays Workout') }}
-                    @endif
+                    {{ __('Todays Workout') }}
 
                 </h2>
                 <x-bladewind::button color="gray" onclick="window.location='{{ route('calendar.index') }}'">Workout
@@ -51,20 +47,5 @@
 
 
         </div>
-
-        <br>
-        <hr><br>
-        @if ($date != '')
-            <form method="POST" action="{{ route('workout.copy') }}">
-                @csrf
-                @method('put')
-                Copy Workout to:
-                <x-text-input id="old" class="mt-1" type="hidden" name="old"
-                    value="{{ $date }}" />
-                <x-text-input id="date" class="mt-1" type="date" name="date" />
-                <x-bladewind::button color="gray" icon="copy" title="delete"
-                    can_submit="true">Copy</x-bladewind::button>
-            </form>
-        @endif
     </div>
 </x-app-layout>

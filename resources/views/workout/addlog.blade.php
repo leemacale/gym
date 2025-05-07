@@ -17,6 +17,12 @@
                 <!-- Name -->
                 <div>
                     <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
+                    <x-input-label for="weight" :value="__('Weight (kg)')" />
+                    <x-text-input id="weight" class="block w-full mt-1" type="number" name="weight"
+                        :value="old('weight')" required autofocus autocomplete="weight" />
+                    <x-input-error :messages="$errors->get('weight')" class="mt-2" />
+
+
                     <x-input-label for="reps" :value="__('Reps')" />
                     <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
                         :value="old('reps')" required autofocus autocomplete="reps" />

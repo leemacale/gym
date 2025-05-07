@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use App\Models\workout;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Calendar;
 use App\Models\Exercise;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 
 class WorkoutController extends Controller
 {
@@ -19,13 +21,31 @@ class WorkoutController extends Controller
 
         $mytime = Carbon::now();
         $now = $mytime->toDateString();
-        $workout = Workout::where('user_id', Auth::user()->id)->where('date', $now)->get();
+        $date = request()->date;
+        if (request()->date != '') {
+
+            $workout = Workout::where('user_id', Auth::user()->id)->where('date', request()->date)->get();
+        } else {
+
+            $workout = Workout::where('user_id', Auth::user()->id)->where('date', $now)->get();
+        }
 
         return view('workout.index', [
-            'workout' => $workout
+            'workout' => $workout,
+            'date' => $date
         ]);
     }
 
+    public function date(Date $date)
+    {
+
+
+        $workout = Workout::where('user_id', Auth::user()->id)->where('date', $date)->get();
+
+        return view('workout.date', [
+            'workout' => $workout
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -66,11 +86,59 @@ class WorkoutController extends Controller
             'exercise_id' => $exercise_id,
             'date' => $date,
             'user_id' => $user_id,
+            'weight' => $request->weight,
 
         ]);
 
+        $calendar = Calendar::where('created_at', 'like', '%' . $date . '%')->where('user_id', Auth::user()->id)->get();
+
+
+        Calendar::create([
+            'comment' => 'Workout ...',
+            'user_id' => Auth::user()->id,
+            'start_date' => $date,
+            'end_date' => $date,
+        ]);
+
+
         return redirect(route('workout.index', absolute: false))->with('message', 'Exercise added to Workout successfully!');
     }
+
+
+    public function copy(Request $request)
+    {
+        //
+        $olddate = $request->old;
+        $newdate = $request->date;
+
+        $workout = Workout::where('user_id', Auth::user()->id)->where('date', $olddate)->get();
+
+        foreach ($workout as $newworkout) {
+            Workout::create([
+                'reps' => $newworkout->reps,
+                'exercise_id' => $newworkout->exercise_id,
+                'date' => $newdate,
+                'user_id' => $newworkout->user_id,
+                'weight' => $newworkout->weight,
+
+            ]);
+        }
+
+
+        $calendar = Calendar::where('created_at', 'like', '%' . $newdate . '%')->where('user_id', Auth::user()->id)->get();
+
+
+        Calendar::create([
+            'comment' => 'Workout ...',
+            'user_id' => Auth::user()->id,
+            'start_date' => $newdate,
+            'end_date' => $newdate,
+        ]);
+
+
+        return redirect('/workout?date=' . $newdate);
+    }
+
 
     /**
      * Display the specified resource.
@@ -83,17 +151,27 @@ class WorkoutController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(workout $workout)
+    public function edit(workout $workouts)
     {
         //
+
+        return view('workout.edit', [
+            'workouts' => $workouts
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, workout $workout)
+    public function update(Request $request, workout $workouts)
     {
         //
+
+        $workouts->update([
+            'reps' => $request->reps,
+            'weight' => $request->weight,
+        ]);
+        return redirect(route('workout.index', absolute: false));
     }
 
     /**

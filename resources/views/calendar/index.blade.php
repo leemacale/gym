@@ -31,9 +31,19 @@
                     initialView: 'timeGridWeek',
                     slotMinTime: '8:00:00',
                     slotMaxTime: '19:00:00',
+                    events: @json($events),
+
+                    eventClick: function(info) {
+                        info.jsEvent.preventDefault(); // don't let the browser navigate
+
+                        window.open('/workout?date=' + info.event.url);
+
+
+                    },
 
                 });
                 calendar.render();
+                calendar.setOption('height', 'auto');
             });
         </script>
     @endpush

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calendar;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {
@@ -14,7 +15,21 @@ class CalendarController extends Controller
     public function index()
     {
         //
-        return view('calendar.index');
+        $events = [];
+        $calendars = Calendar::where('user_id', Auth::user()->id)
+            ->get();
+
+        foreach ($calendars as $calEvents) {
+            $events[] = [
+                'title' => $calEvents->comment,
+                'start' => $calEvents->start_date,
+                'end' => $calEvents->start_date,
+                'url' => $calEvents->end_date,
+            ];
+        }
+
+
+        return view('calendar.index', compact('events', 'calendars'));
     }
 
     /**

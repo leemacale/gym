@@ -2179,6 +2179,7 @@ namespace App\Models {
     /**
      * App\Models\workout
      *
+     * @property string|null $weight
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property mixed $user_id
@@ -2194,6 +2195,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout whereWeight($value)
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<workout>|workout query()
