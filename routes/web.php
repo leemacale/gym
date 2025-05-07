@@ -59,6 +59,9 @@ Route::patch('/equipment/{equipments}', [EquipmentController::class, 'update'])-
 Route::get('/equipment/{equipments}/qr', [EquipmentController::class, 'qr'])->name('equipment.qr');
 
 
+Route::get('/scanner', [EquipmentController::class, 'scanner'])->name('scanner.index');
+
+
 Route::get('/equipment/{equipments}/exercises', [EquipmentController::class, 'exercises'])->name('equipment.exercises');
 Route::get('/equipment/{equipments}/addexercises', [EquipmentController::class, 'addexercises'])->name('equipment.addexercises');
 Route::put('/equipment/storeexercise', [EquipmentController::class, 'storeexercise'])->name('equipment.storeexercise');

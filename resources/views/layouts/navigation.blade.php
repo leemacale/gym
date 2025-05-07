@@ -35,6 +35,9 @@
                     <x-nav-link :href="route('workout.index')" :active="request()->routeIs('workout*')">
                         {{ __('Workout') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('scanner.index')" :active="request()->routeIs('scanner*')">
+                        {{ __('Scanner') }}
+                    </x-nav-link>
                 </div>
             </div>
 

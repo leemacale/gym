@@ -19,6 +19,7 @@
                         <th>Name</th>
                         <th>Category</th>
                         <th>Image</th>
+                        <th></th>
 
                     </x-slot>
                     @foreach ($linkexercise as $exercises)
@@ -27,6 +28,9 @@
                             <td>{{ $exercises->exercise->category->name }}</td>
                             <td><img src="{{ asset($exercises->exercise->image) }}" alt="" height="200px"
                                     width="200px">
+                            </td>
+                            <td> <x-bladewind::button color="gray" icon="plus" title="add"
+                                    onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
                             </td>
 
                         </tr>

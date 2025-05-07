@@ -22,6 +22,12 @@ class EquipmentController extends Controller
             'equipment' => $equipment
         ]);
     }
+    public function scanner()
+    {
+        //
+
+        return view('scanner.index');
+    }
 
     /**
      * Show the form for creating a new resource.
