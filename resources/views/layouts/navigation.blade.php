@@ -16,6 +16,9 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @if (Auth::user()->role == 'admin')
+                        <x-nav-link :href="route('announcement.index')" :active="request()->routeIs('announcement*')">
+                            {{ __('Announcements') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
                             {{ __('Category') }}
                         </x-nav-link>

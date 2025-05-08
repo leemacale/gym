@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementsController;
 use App\Models\UserProf;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -78,6 +79,14 @@ Route::get('/exercise/{exercises}/edit', [ExerciseController::class, 'edit'])->n
 Route::delete('/exercise/{exercises}', [ExerciseController::class, 'destroy'])->name('exercise.destroy');
 Route::patch('/exercise/{exercises}', [ExerciseController::class, 'update'])->name('exercise.update');
 
+
+// announcement
+Route::get('/announcement', [AnnouncementsController::class, 'index'])->name('announcement.index');
+Route::get('/announcement/add', [AnnouncementsController::class, 'add'])->name('announcement.add');
+Route::put('/announcement/store', [AnnouncementsController::class, 'store'])->name('announcement.store');
+Route::get('/announcement/{announcements}/edit', [AnnouncementsController::class, 'edit'])->name('announcement.edit');
+Route::delete('/announcement/{announcements}', [AnnouncementsController::class, 'destroy'])->name('announcement.destroy');
+Route::patch('/announcement/{announcements}', [AnnouncementsController::class, 'update'])->name('announcement.update');
 
 
 
