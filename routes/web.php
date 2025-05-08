@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\EquipmentController;
-use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\InventoryController;
+use App\Models\UserProf;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\UserProfController;
+use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\InventoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +93,10 @@ Route::delete('/workout/{workouts}', [WorkoutController::class, 'destroy'])->nam
 Route::patch('/workout/{workouts}', [WorkoutController::class, 'update'])->name('workout.update');
 
 
-// workout
+// calendar
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+
+
+// tdee
+Route::get('/step1', [UserProfController::class, 'step1'])->name('calculator.index');
 require __DIR__ . '/auth.php';
