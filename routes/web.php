@@ -99,4 +99,11 @@ Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.in
 
 // tdee
 Route::get('/step1', [UserProfController::class, 'step1'])->name('calculator.index');
+Route::put('/step1/store', [UserProfController::class, 'store'])->name('calculator.store');
+Route::get('/step2/{userprof}', [UserProfController::class, 'step2'])->name('calculator.step2');
+Route::put('/step2/store2', [UserProfController::class, 'store2'])->name('calculator.store2');
+Route::get('/step3/{userprof}', [UserProfController::class, 'step3'])->name('calculator.step3');
+
+
+
 require __DIR__ . '/auth.php';

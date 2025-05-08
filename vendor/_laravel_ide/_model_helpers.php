@@ -621,8 +621,8 @@ namespace App\Models {
     /**
      * App\Models\Equipment
      *
-     * @property string|null $image
      * @property string|null $description
+     * @property string|null $image
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $quantity
@@ -633,8 +633,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereQuantity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereImage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment whereDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Equipment>|Equipment query()

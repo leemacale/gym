@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('user_profs', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
+            $table->string('age');
+            $table->string('gender');
+            $table->string('weight');
+            $table->string('height');
+            $table->string('activity');
+            $table->string('goal');
+            $table->string('date');
             $table->timestamps();
         });
     }

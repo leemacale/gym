@@ -22,6 +22,22 @@ class UserProfController extends Controller
         return view('calculator.step1');
     }
 
+    public function step2(UserProf $userprof)
+    {
+        //
+
+
+        return view('calculator.step2', ['userprof' => $userprof]);
+    }
+
+    public function step3(UserProf $userprof)
+    {
+        //
+
+
+        return view('calculator.step3', ['userprof' => $userprof]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -36,6 +52,32 @@ class UserProfController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'user_id' => ['required', 'string', 'max:255'],
+            'age' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:255'],
+            'weight' => ['required', 'string', 'max:255'],
+            'height' => ['required', 'string', 'max:255'],
+            'activity' => ['required', 'string', 'max:255'],
+
+        ]);
+        $userprof = UserProf::create($validated);
+
+        return redirect(route('calculator.step2', ['userprof' => $userprof]))->with('message', 'Profile added successfully!');
+    }
+
+    public function store2(Request $request)
+    {
+        //
+
+        $userprof = UserProf::find($request->user_id);
+
+        $userprof->update([
+            'goal' => $request->goal,
+            'date' => $request->date,
+        ]);
+
+        return redirect(route('calculator.step3', ['userprof' => $userprof]))->with('message', 'Profile updated successfully!');
     }
 
     /**
