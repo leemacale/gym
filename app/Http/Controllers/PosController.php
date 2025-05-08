@@ -14,8 +14,16 @@ class PosController extends Controller
     public function index()
     {
         //
-    }
+        $pos = Pos::get();
+        return view('pos.index', [
+            'pos' => $pos,
 
+        ]);
+    }
+    public function add()
+    {
+        return view('pos.add');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -30,6 +38,18 @@ class PosController extends Controller
     public function store(Request $request)
     {
         //
+
+        $validated = $request->validate([
+            'description' => ['required', 'string', 'max:255'],
+            'amount' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'max:255']
+        ]);
+
+
+
+        Pos::create($validated);
+
+        return redirect(route('pos.index', absolute: false))->with('message', 'POS Entry created successfully!');
     }
 
     /**
@@ -62,5 +82,8 @@ class PosController extends Controller
     public function destroy(Pos $pos)
     {
         //
+        $pos->delete();
+
+        return redirect(route('pos.index'))->with('message', 'POS Entry deleted successfully!');
     }
 }

@@ -10,6 +10,7 @@ class Inventory extends Model
 
     protected $fillable = [
         'name',
-        'quantity'
+        'quantity',
+        'size',
     ];
 }

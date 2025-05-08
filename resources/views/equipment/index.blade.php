@@ -5,9 +5,10 @@
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     {{ __('Equipment') }}
                 </h2>
-                <x-bladewind::button color="gray" icon="plus"
-                    onclick="window.location='{{ route('equipment.add') }}'">Add</x-bladewind::button>
-
+                @if (Auth::user()->role == 'admin')
+                    <x-bladewind::button color="gray" icon="plus"
+                        onclick="window.location='{{ route('equipment.add') }}'">Add</x-bladewind::button>
+                @endif
             </div>
         </x-slot>
 
@@ -34,14 +35,16 @@
                             <form method="POST" action="{{ route('equipment.destroy', $equipments->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <x-bladewind::button color="gray" icon="pencil-square" title="edit"
-                                    onclick="window.location='{{ route('equipment.edit', $equipments->id) }}'">EDIT</x-bladewind::button>
-                                <x-bladewind::button color="gray" icon="trash" title="delete"
-                                    can_submit="true">DELETE</x-bladewind::button>
+                                @if (Auth::user()->role == 'admin')
+                                    <x-bladewind::button color="gray" icon="pencil-square" title="edit"
+                                        onclick="window.location='{{ route('equipment.edit', $equipments->id) }}'">EDIT</x-bladewind::button>
+                                    <x-bladewind::button color="gray" icon="trash" title="delete"
+                                        can_submit="true">DELETE</x-bladewind::button>
 
-                                <x-bladewind::button color="gray" icon="" title="generate"
-                                    onclick="window.location='{{ route('equipment.qr', $equipments->id) }}'">GENERATE
-                                    QR</x-bladewind::button>
+                                    <x-bladewind::button color="gray" icon="" title="generate"
+                                        onclick="window.location='{{ route('equipment.qr', $equipments->id) }}'">GENERATE
+                                        QR</x-bladewind::button>
+                                @endif
 
                                 <x-bladewind::button color="gray" icon="" title="exercises"
                                     onclick="window.location='{{ route('equipment.exercises', $equipments->id) }}'">EXERCISES</x-bladewind::button>

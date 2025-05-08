@@ -1862,6 +1862,7 @@ namespace App\Models {
     /**
      * App\Models\Inventory
      *
+     * @property string|null $size
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $quantity
@@ -1872,6 +1873,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory whereQuantity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory whereSize($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Inventory>|Inventory query()

@@ -12,6 +12,7 @@ use App\Http\Controllers\UserProfController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\PosController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -96,6 +97,16 @@ Route::put('/events/store', [EventsController::class, 'store'])->name('events.st
 Route::get('/events/{events}/edit', [EventsController::class, 'edit'])->name('events.edit');
 Route::delete('/events/{events}', [EventsController::class, 'destroy'])->name('events.destroy');
 Route::patch('/events/{events}', [EventsController::class, 'update'])->name('events.update');
+
+
+// pos
+Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+Route::get('/pos/add', [PosController::class, 'add'])->name('pos.add');
+Route::put('/pos/store', [PosController::class, 'store'])->name('pos.store');
+Route::get('/pos/{pos}/edit', [PosController::class, 'edit'])->name('pos.edit');
+Route::delete('/pos/{pos}', [PosController::class, 'destroy'])->name('pos.destroy');
+Route::patch('/pos/{pos}', [PosController::class, 'update'])->name('pos.update');
+
 
 // workout
 Route::get('/workout', [WorkoutController::class, 'index'])->name('workout.index');

@@ -24,6 +24,12 @@
                         :value="old('quantity', $inventories->quantity)" required autofocus autocomplete="quantity" />
                     <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
                 </div>
+                <div>
+                    <x-input-label for="size" :value="__('Size')" />
+                    <x-text-input id="size" class="block w-full mt-1" type="number" name="size"
+                        :value="old('size', $inventories->size)" required autofocus autocomplete="size" />
+                    <x-input-error :messages="$errors->get('size')" class="mt-2" />
+                </div>
 
 
                 <div class="flex items-center justify-end mt-4">

@@ -196,6 +196,11 @@
         $walkin = App\Models\User::where('role', 'user')->where('type', 'Walk-In')->count();
         $members = App\Models\User::where('role', 'user')->where('type', 'Member')->count();
 
+        $income = App\Models\Pos::where('type', 'Income')->sum('amount');
+        $expense = App\Models\Pos::where('type', 'Expense')->sum('amount');
+
+        $total = $income - $expense;
+
         $announcement = App\Models\Announcements::get();
 
         $calendars = App\Models\Events::get();
@@ -211,24 +216,27 @@
         }
 
     @endphp
-    <div class="dashboard-cards">
-        <div class="card">
-            <h4>Users</h4>
-            <p class="metric">{{ $users }}</p>
+
+    @if (Auth::user()->role == 'admin')
+        <div class="dashboard-cards">
+            <div class="card">
+                <h4>Users</h4>
+                <p class="metric">{{ $users }}</p>
+            </div>
+            <div class="card">
+                <h4>Walk-In</h4>
+                <p class="metric">{{ $walkin }}</p>
+            </div>
+            <div class="card">
+                <h4>Members</h4>
+                <p class="metric">{{ $members }}</p>
+            </div>
+            <div class="card">
+                <h4>Sales</h4>
+                <p class="metric">{{ $total }} PHP</p>
+            </div>
         </div>
-        <div class="card">
-            <h4>Walk-In</h4>
-            <p class="metric">{{ $walkin }}</p>
-        </div>
-        <div class="card">
-            <h4>Members</h4>
-            <p class="metric">{{ $members }}</p>
-        </div>
-        <div class="card">
-            <h4>Sales</h4>
-            <p class="metric">1,240</p>
-        </div>
-    </div>
+    @endif
 
 
     <br>

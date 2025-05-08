@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
+                        <img src="{{ asset('assets/logo1.png') }}" alt="" width="40px">
                     </a>
                 </div>
 
@@ -16,6 +16,9 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @if (Auth::user()->role == 'admin')
+                        <x-nav-link :href="route('pos.index')" :active="request()->routeIs('pos*')">
+                            {{ __('POS') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('announcement.index')" :active="request()->routeIs('announcement*')">
                             {{ __('Announcements') }}
                         </x-nav-link>
@@ -66,6 +69,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+
+                        <x-dropdown-link :href="route('calculator.index')">
+                            {{ __('TDEE Calculator') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -107,6 +114,9 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             @if (Auth::user()->role == 'admin')
+                <x-responsive-nav-link :href="route('pos.index')" :active="request()->routeIs('pos*')">
+                    {{ __('POS') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
                     {{ __('Category') }}
                 </x-responsive-nav-link>

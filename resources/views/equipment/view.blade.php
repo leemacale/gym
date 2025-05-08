@@ -29,8 +29,11 @@
                             <td><img src="{{ asset($exercises->exercise->image) }}" alt="" height="200px"
                                     width="200px">
                             </td>
-                            <td> <x-bladewind::button color="gray" icon="plus" title="add"
-                                    onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
+                            <td>
+                                @if (Auth::user()->role == 'admin')
+                                    <x-bladewind::button color="gray" icon="plus" title="add"
+                                        onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
+                                @endif
                             </td>
 
                         </tr>

@@ -38,6 +38,7 @@ class InventoryController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'quantity' => ['required', 'string', 'max:255'],
+            'size' => ['required', 'string', 'max:255'],
         ]);
         Inventory::create($validated);
 
@@ -73,7 +74,8 @@ class InventoryController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'quantity' => ['required', 'string', 'max:255']
+            'quantity' => ['required', 'string', 'max:255'],
+            'size' => ['required', 'string', 'max:255'],
         ]);
 
         $inventories->update($validated);

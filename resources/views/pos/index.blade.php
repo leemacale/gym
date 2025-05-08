@@ -3,10 +3,10 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Inventory') }}
+                    {{ __('POS') }}
                 </h2>
                 <x-bladewind::button color="gray" icon="plus"
-                    onclick="window.location='{{ route('inventory.add') }}'">Add</x-bladewind::button>
+                    onclick="window.location='{{ route('pos.add') }}'">Add</x-bladewind::button>
 
             </div>
         </x-slot>
@@ -17,22 +17,26 @@
                 searchable="true">
 
                 <x-slot name="header">
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Size</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Type</th>
                     <th></th>
                 </x-slot>
-                @foreach ($inventory as $inventories)
+                @foreach ($pos as $pos)
                     <tr>
-                        <td>{{ $inventories->name }}</td>
-                        <td>{{ $inventories->quantity }}</td>
-                        <td>{{ $inventories->size }}</td>
+                        <td>{{ $pos->description }}</td>
+                        <td>{{ $pos->created_at }}</td>
+                        <td>{{ $pos->amount }}</td>
+                        <td>{{ $pos->type }}</td>
+
+
+
                         <td>
-                            <form method="POST" action="{{ route('inventory.destroy', $inventories->id) }}">
+                            <form method="POST" action="{{ route('pos.destroy', $pos->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <x-bladewind::button color="gray" icon="pencil-square" title="edit"
-                                    onclick="window.location='{{ route('inventory.edit', $inventories->id) }}'">EDIT</x-bladewind::button>
+
                                 <x-bladewind::button color="gray" icon="trash" title="delete"
                                     can_submit="true">DELETE</x-bladewind::button>
                             </form>
