@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserProfController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\EventsController;
 use App\Http\Controllers\InventoryController;
 
 Route::get('/', function () {
@@ -88,7 +89,13 @@ Route::get('/announcement/{announcements}/edit', [AnnouncementsController::class
 Route::delete('/announcement/{announcements}', [AnnouncementsController::class, 'destroy'])->name('announcement.destroy');
 Route::patch('/announcement/{announcements}', [AnnouncementsController::class, 'update'])->name('announcement.update');
 
-
+// events
+Route::get('/events', [EventsController::class, 'index'])->name('events.index');
+Route::get('/events/add', [EventsController::class, 'add'])->name('events.add');
+Route::put('/events/store', [EventsController::class, 'store'])->name('events.store');
+Route::get('/events/{events}/edit', [EventsController::class, 'edit'])->name('events.edit');
+Route::delete('/events/{events}', [EventsController::class, 'destroy'])->name('events.destroy');
+Route::patch('/events/{events}', [EventsController::class, 'update'])->name('events.update');
 
 // workout
 Route::get('/workout', [WorkoutController::class, 'index'])->name('workout.index');

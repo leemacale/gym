@@ -197,6 +197,19 @@
         $members = App\Models\User::where('role', 'user')->where('type', 'Member')->count();
 
         $announcement = App\Models\Announcements::get();
+
+        $calendars = App\Models\Events::get();
+
+        $events = [];
+
+        foreach ($calendars as $calEvents) {
+            $events[] = [
+                'title' => $calEvents->comment,
+                'start' => $calEvents->start_date,
+                'end' => $calEvents->end_date,
+            ];
+        }
+
     @endphp
     <div class="dashboard-cards">
         <div class="card">
@@ -256,10 +269,15 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
-                    slotMinTime: '8:00:00',
-                    slotMaxTime: '19:00:00',
+                    events: @json($events),
 
 
+                    eventClick: function(info) {
+                        alert(info.event.start + " - " + info.event.end + " \n" + info.event
+                            .title);
+
+
+                    },
                 });
                 calendar.render();
                 calendar.setOption('height', 'auto');

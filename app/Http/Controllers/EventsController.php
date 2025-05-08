@@ -14,6 +14,16 @@ class EventsController extends Controller
     public function index()
     {
         //
+
+        $events = Events::get();
+        return view('events.index', [
+            'event' => $events,
+
+        ]);
+    }
+    public function add()
+    {
+        return view('events.add');
     }
 
     /**
@@ -30,6 +40,18 @@ class EventsController extends Controller
     public function store(Request $request)
     {
         //
+
+        $validated = $request->validate([
+            'comment' => ['required', 'string', 'max:255'],
+            'start_date' => ['required', 'string', 'max:255'],
+            'end_date' => ['required', 'string', 'max:255']
+        ]);
+
+
+
+        Events::create($validated);
+
+        return redirect(route('events.index', absolute: false))->with('message', 'Event created successfully!');
     }
 
     /**
@@ -62,5 +84,8 @@ class EventsController extends Controller
     public function destroy(Events $events)
     {
         //
+        $events->delete();
+
+        return redirect(route('events.index'))->with('message', 'Announcement deleted successfully!');
     }
 }

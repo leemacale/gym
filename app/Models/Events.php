@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Events extends Model
 {
     //
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'comment'
+    ];
 }

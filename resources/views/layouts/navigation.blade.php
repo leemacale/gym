@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('announcement.index')" :active="request()->routeIs('announcement*')">
                             {{ __('Announcements') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('events.index')" :active="request()->routeIs('events*')">
+                            {{ __('Events') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
                             {{ __('Category') }}
                         </x-nav-link>
@@ -39,9 +42,7 @@
                     <x-nav-link :href="route('workout.index')" :active="request()->routeIs('workout*')">
                         {{ __('Workout') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('scanner.index')" :active="request()->routeIs('scanner*')">
-                        {{ __('Scanner') }}
-                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -126,9 +127,7 @@
             <x-responsive-nav-link :href="route('workout.index')" :active="request()->routeIs('workout*')">
                 {{ __('Workout') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('scanner.index')" :active="request()->routeIs('scanner*')">
-                {{ __('Scanner') }}
-            </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->
@@ -157,3 +156,40 @@
         </div>
     </div>
 </nav>
+
+<style>
+    .floating-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #4f46e5;
+        /* Indigo */
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 60px;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .floating-button:hover {
+        background-color: #3730a3;
+        /* Darker Indigo on hover */
+    }
+
+    .floating-button i {
+        font-size: 24px;
+
+    }
+</style>
+
+
+<a href="/scanner" class="floating-button" title="Open Camera">
+    📷
+</a>
