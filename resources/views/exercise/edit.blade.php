@@ -31,12 +31,22 @@
                 </div>
 
 
+                <div>
+                    <x-input-label for="image" :value="__('Exercise Image')" />
+                    <x-text-input id="image" class="block w-full mt-1" type="file" name="image"
+                        :value="old('image')" required autofocus autocomplete="image" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                </div>
+
                 <div class="flex items-center justify-end mt-4">
 
 
                     <x-primary-button class="ms-4">
                         {{ __('Update') }}
                     </x-primary-button>
+
+                    <x-secondary-button color="gray" 
+                                        onclick="window.location='{{ route('exercise.index') }}'">Cancel</x-secondary-button >
                 </div>
             </form>
         </div>

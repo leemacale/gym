@@ -35,7 +35,7 @@
 
                                 <input type="hidden" name="exercise_id" value="{{ $exercises->id }}">
                                 <input type="hidden" name="equipment_id" value="{{ $equipments->id }}">
-                                <x-bladewind::button color="gray" icon="plus" title="add"
+                                <x-bladewind::button color="gray" icon="plus" title="add" class="w-full m-2"
                                     can_submit="true">ADD</x-bladewind::button>
                             </form>
                         </td>

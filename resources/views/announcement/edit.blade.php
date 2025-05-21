@@ -37,6 +37,8 @@
                     <x-primary-button class="ms-4">
                         {{ __('Update') }}
                     </x-primary-button>
+                    <x-secondary-button color="gray" 
+                                        onclick="window.location='{{ route('announcement.index') }}'">Cancel</x-secondary-button >
                 </div>
             </form>
         </div>

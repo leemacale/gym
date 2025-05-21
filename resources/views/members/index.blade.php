@@ -3,7 +3,7 @@
         <x-slot name="header">
             <div class="flex justify-between">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Exercise') }}
+                    {{ __('Members') }}
                 </h2>
                 <x-bladewind::button color="gray" icon="plus"
                     onclick="window.location='{{ route('exercise.add') }}'">Add</x-bladewind::button>
@@ -27,7 +27,7 @@
                         <td>{{ $members->type }}</td>
 
                         <td>
-                            <x-bladewind::button color="gray" icon="check" title="approve"
+                            <x-bladewind::button color="gray" icon="check" title="approve" class="w-full m-2"
                                 onclick="window.location='{{ route('members.approve', $members->id) }}'">Member</x-bladewind::button>
 
                         </td>

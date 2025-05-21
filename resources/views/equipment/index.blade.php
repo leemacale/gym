@@ -31,23 +31,24 @@
                         <td>{{ $equipments->description }}</td>
                         <td><img src="{{ asset($equipments->image) }}" alt="" height="200px" width="200px">
                         </td>
-                        <td>
+                              <td>
                             <form method="POST" action="{{ route('equipment.destroy', $equipments->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 @if (Auth::user()->role == 'admin')
-                                    <x-bladewind::button color="gray" icon="pencil-square" title="edit"
+                                    <x-bladewind::button color="gray" icon="pencil-square" title="edit" class="w-full m-2"
                                         onclick="window.location='{{ route('equipment.edit', $equipments->id) }}'">EDIT</x-bladewind::button>
-                                    <x-bladewind::button color="gray" icon="trash" title="delete"
+                                    <x-bladewind::button color="gray" icon="trash" title="delete" class="w-full m-2"
                                         can_submit="true">DELETE</x-bladewind::button>
 
-                                    <x-bladewind::button color="gray" icon="" title="generate"
+                                    <x-bladewind::button color="gray" icon="" title="generate" class="w-full m-2"
                                         onclick="window.location='{{ route('equipment.qr', $equipments->id) }}'">GENERATE
                                         QR</x-bladewind::button>
                                 @endif
 
-                                <x-bladewind::button color="gray" icon="" title="exercises"
+                                <x-bladewind::button color="gray" icon="" title="exercises" class="w-full m-2"
                                     onclick="window.location='{{ route('equipment.exercises', $equipments->id) }}'">EXERCISES</x-bladewind::button>
+</form>
                         </td>
                     </tr>
                 @endforeach

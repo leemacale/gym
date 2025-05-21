@@ -18,11 +18,27 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
+                 <div>
+                    <x-input-label for="description" :value="__('Description')" />
+                    <x-text-input id="description" class="block w-full mt-1" type="text" name="description"
+                        :value="old('description', $equipments->description)" required autofocus autocomplete="description" />
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                </div>
+
                 <div>
                     <x-input-label for="quantity" :value="__('Quantity')" />
                     <x-text-input id="quantity" class="block w-full mt-1" type="number" name="quantity"
                         :value="old('quantity', $equipments->quantity)" required autofocus autocomplete="quantity" />
                     <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                </div>
+
+                   
+
+                <div>
+                    <x-input-label for="image" :value="__('Exercise Image')" />
+                    <x-text-input id="image" class="block w-full mt-1" type="file" name="image"
+                        :value="old('image')" required autofocus autocomplete="image" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
 
 
@@ -32,6 +48,9 @@
                     <x-primary-button class="ms-4">
                         {{ __('Update') }}
                     </x-primary-button>
+
+                    <x-secondary-button color="gray" 
+                                        onclick="window.location='{{ route('equipment.index') }}'">Cancel</x-secondary-button >
                 </div>
             </form>
         </div>

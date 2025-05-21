@@ -14,14 +14,14 @@
                 <div>
                     <x-input-label for="title" :value="__('Title')" />
                     <x-text-input id="title" class="block w-full mt-1" type="text" name="title" :value="old('title')"
-                        required autofocus autocomplete="title" />
+                         autofocus autocomplete="title" />
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="description" :value="__('Description')" />
                     <x-text-input id="description" class="block w-full mt-1" type="text" name="description"
-                        :value="old('description')" required autofocus autocomplete="description" />
+                        :value="old('description')"  autofocus autocomplete="description" />
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
@@ -29,7 +29,7 @@
                 <div>
                     <x-input-label for="image" :value="__('Announcement Background Image')" />
                     <x-text-input id="image" class="block w-full mt-1" type="file" name="image"
-                        :value="old('image')" required autofocus autocomplete="image" />
+                        :value="old('image')"  autofocus autocomplete="image" />
                     <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
 
@@ -39,6 +39,9 @@
                     <x-primary-button class="ms-4">
                         {{ __('Add') }}
                     </x-primary-button>
+
+                     <x-secondary-button color="gray" 
+                                        onclick="window.location='{{ route('announcement.index') }}'">Cancel</x-secondary-button >
                 </div>
             </form>
         </div>

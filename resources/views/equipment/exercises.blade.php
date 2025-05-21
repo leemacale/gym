@@ -35,7 +35,7 @@
                                 @csrf
                                 @method('DELETE')
                                 @if (Auth::user()->role == 'admin')
-                                    <x-bladewind::button color="gray" icon="trash" title="delete"
+                                    <x-bladewind::button color="gray" icon="trash" title="delete" class="w-full m-2"
                                         can_submit="true">DELETE</x-bladewind::button>
                                 @endif
                             </form>

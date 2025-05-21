@@ -40,6 +40,8 @@
                     <x-primary-button class="ms-4">
                         {{ __('Add') }}
                     </x-primary-button>
+                    <x-secondary-button color="gray" 
+                                        onclick="window.location='{{ route('exercise.index') }}'">Cancel</x-secondary-button >
                 </div>
             </form>
         </div>

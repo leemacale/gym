@@ -29,13 +29,15 @@
                         <td><img src="{{ asset($announcements->image) }}" alt="" height="200px" width="200px">
                         </td>
 
-                        <td>
+                        <td class ="grid">
                             <form method="POST" action="{{ route('announcement.destroy', $announcements->id) }}">
                                 @csrf
                                 @method('DELETE')
 
-                                <x-bladewind::button color="gray" icon="trash" title="delete"
+                                <x-bladewind::button color="gray" icon="trash" title="delete" class="w-full m-2"
                                     can_submit="true">DELETE</x-bladewind::button>
+
+                                   
                             </form>
                         </td>
                     </tr>

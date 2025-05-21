@@ -24,6 +24,8 @@
                             <x-bladewind::button color="gray" icon="plus" title="add"
                                 onclick="window.location='{{ route('workout.addlog', $exercises->id) }}'">Add</x-bladewind::button>
 
+                                
+
                         </td>
                     </tr>
                 @endforeach

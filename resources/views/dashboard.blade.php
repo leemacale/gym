@@ -82,15 +82,15 @@
 
         .slide-content {
             position: absolute;
-            top: 50%;
+            
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 0);
             background: rgb(99, 99, 99);
             color: #ffffff;
             padding: 20px 30px;
             border-radius: 8px;
             text-align: center;
-            max-width: 80%;
+            width: 100%;
         }
 
         .slide-content h2 {

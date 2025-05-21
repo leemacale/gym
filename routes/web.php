@@ -15,7 +15,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PosController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing.index');
 });
 
 Route::get('/dashboard', function () {

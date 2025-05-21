@@ -40,9 +40,9 @@
                                 @csrf
                                 @method('DELETE')
                                 @if (Auth::user()->role == 'admin')
-                                    <x-bladewind::button color="gray" icon="pencil-square" title="edit"
+                                    <x-bladewind::button color="gray" icon="pencil-square" title="edit" class="w-full m-2"
                                         onclick="window.location='{{ route('exercise.edit', $exercises->id) }}'">EDIT</x-bladewind::button>
-                                    <x-bladewind::button color="gray" icon="trash" title="delete"
+                                    <x-bladewind::button color="gray" icon="trash" title="delete" class="w-full m-2"
                                         can_submit="true">DELETE</x-bladewind::button>
                                 @endif
                             </form>
