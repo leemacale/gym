@@ -22,7 +22,7 @@
                     <tr>
                         <td>{{ $exercises->name }}</td>
                         <td>{{ $exercises->category->name }}</td>
-                        <td><img src="{{ $exercises->image }}" alt="" height="200px" width="200px"></td>
+                        <td><img src="{{ asset($exercises->image) }}" alt="" height="200px" width="200px"></td>
                         <td>
                             @foreach ($exercises->equipment as $equipment)
                                 <a
