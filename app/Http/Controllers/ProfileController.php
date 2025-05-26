@@ -38,6 +38,13 @@ class ProfileController extends Controller
 
         return redirect(route('members.index'));
     }
+    public function disapprove(User $members)
+    {
+
+        $members->update(['type' => 'Disapproved']);
+
+        return redirect(route('members.index'));
+    }
 
 
     /**

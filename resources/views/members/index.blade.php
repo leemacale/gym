@@ -29,7 +29,8 @@
                         <td>
                             <x-bladewind::button color="gray" icon="check" title="approve" class="w-full m-2"
                                 onclick="window.location='{{ route('members.approve', $members->id) }}'">Member</x-bladewind::button>
-
+  <x-bladewind::button color="gray" icon="x-mark" title="approve" class="w-full m-2"
+                                onclick="window.location='{{ route('members.disapprove', $members->id) }}'">Disapproved</x-bladewind::button>
                         </td>
                     </tr>
                 @endforeach

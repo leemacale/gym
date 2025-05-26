@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/members', [ProfileController::class, 'members'])->name('members.index');
     Route::get('/members/{members}/approve', [ProfileController::class, 'approve'])->name('members.approve');
+    Route::get('/members/{members}/disapprove', [ProfileController::class, 'disapprove'])->name('members.disapprove');
 });
 
 // category
@@ -42,6 +43,8 @@ Route::put('/category/store', [CategoryController::class, 'store'])->name('categ
 Route::get('/category/{categories}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::delete('/category/{categories}', [CategoryController::class, 'destroy'])->name('category.destroy');
 Route::patch('/category/{categories}', [CategoryController::class, 'update'])->name('category.update');
+Route::get('/category/{categories}/exercises', [CategoryController::class, 'exercises'])->name('category.exercises');
+
 
 
 // inventory

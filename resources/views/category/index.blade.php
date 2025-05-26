@@ -27,10 +27,14 @@
                             <form method="POST" action="{{ route('category.destroy', $categories->id) }}">
                                 @csrf
                                 @method('DELETE')
+                                 @if (Auth::user()->role == 'admin')
                                 <x-bladewind::button color="gray" icon="pencil-square" title="edit" class="w-full m-2"
                                     onclick="window.location='{{ route('category.edit', $categories->id) }}'">EDIT</x-bladewind::button>
                                 <x-bladewind::button color="gray" icon="trash" title="delete" class="w-full m-2"
                                     can_submit="true">DELETE</x-bladewind::button>
+        @endif
+                                     <x-bladewind::button color="gray" icon="" title="exercises" class="w-full m-2"
+                                    onclick="window.location='{{ route('category.exercises', $categories->id) }}'">EXERCISES</x-bladewind::button>
                             </form>
                         </td>
                     </tr>

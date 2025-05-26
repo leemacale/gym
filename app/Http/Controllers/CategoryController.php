@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\LinkExercise;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -59,6 +60,18 @@ class CategoryController extends Controller
 
         return view('category.edit', [
             'categories' => $categories,
+        ]);
+    }
+
+     public function exercises(Category $categories)
+    {
+        //
+
+        $linkexercise = LinkExercise::get();
+
+        return view('category.exercises', [
+            'categories' => $categories,
+            'linkexercise' => $linkexercise,
         ]);
     }
 

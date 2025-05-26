@@ -25,9 +25,7 @@
                         <x-nav-link :href="route('events.index')" :active="request()->routeIs('events*')">
                             {{ __('Events') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
-                            {{ __('Category') }}
-                        </x-nav-link>
+                       
                         <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory*')">
                             {{ __('Inventory') }}
                         </x-nav-link>
@@ -36,6 +34,9 @@
                             {{ __('Members') }}
                         </x-nav-link>
                     @endif
+                     <x-nav-link :href="route('category.index')" :active="request()->routeIs('category*')">
+                            {{ __('Category') }}
+                        </x-nav-link>
                     <x-nav-link :href="route('equipment.index')" :active="request()->routeIs('equipment*')">
                         {{ __('Equipment') }}
                     </x-nav-link>
