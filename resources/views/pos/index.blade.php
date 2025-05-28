@@ -20,7 +20,7 @@
                     <th>Description</th>
                     <th>Date</th>
                     <th>Amount</th>
-                    <th>Type</th>
+ 
                     <th></th>
                 </x-slot>
                 @foreach ($pos as $pos)
@@ -28,7 +28,7 @@
                         <td>{{ $pos->description }}</td>
                         <td>{{ $pos->created_at }}</td>
                         <td>{{ $pos->amount }}</td>
-                        <td>{{ $pos->type }}</td>
+        
 
 
 

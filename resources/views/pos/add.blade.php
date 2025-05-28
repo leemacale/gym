@@ -12,26 +12,32 @@
                 @method('PUT')
                 <!-- Name -->
                 <div>
-                    <x-input-label for="description" :value="__('Entry Description')" />
-                    <x-text-input id="description" class="block w-full mt-1" type="text" name="description"
-                        :value="old('description')" required autofocus autocomplete="description" />
+                    <x-input-label for="description" :value="__('Item')" />
+                    <select name="description" class="block w-full mt-1">
+                        @foreach ($inventory as $inventorys)
+                            <option value="{{ $inventorys->id }}">{{ $inventorys->name }}</option>
+                        @endforeach
+                    </select>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-input-label for="amount" :value="__('Amount')" />
+                    <x-input-label for="quantity" :value="__('Quantity')" />
+                    <x-text-input id="quantity" class="block w-full mt-1" type="number" name="quantity"
+                        :value="old('quantity')" required autofocus autocomplete="quantity" />
+                    <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="amount" :value="__('Price')" />
                     <x-text-input id="amount" class="block w-full mt-1" type="number" name="amount"
                         :value="old('amount')" required autofocus autocomplete="amount" />
                     <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-input-label for="type" :value="__('Type')" />
-                    <select name="type" id="type" class="block w-full mt-1">
-                        <option value="Income">Income</option>
-                        <option value="Expense">Expense</option>
-                    </select>
-                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                 
+                    <input type="hidden" name="type" value="Income" />
                 </div>
 
 

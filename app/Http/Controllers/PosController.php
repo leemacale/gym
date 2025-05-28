@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pos;
-use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PosController extends Controller
 {
@@ -15,14 +16,18 @@ class PosController extends Controller
     {
         //
         $pos = Pos::get();
+
         return view('pos.index', [
             'pos' => $pos,
-
+          
         ]);
     }
     public function add()
     {
-        return view('pos.add');
+                $inventory = Inventory::get();
+        return view('pos.add', [  
+            'inventory' => $inventory,
+]);
     }
     /**
      * Show the form for creating a new resource.
@@ -45,9 +50,27 @@ class PosController extends Controller
             'type' => ['required', 'string', 'max:255']
         ]);
 
+        $description = '';
+
+        $inv = Inventory::where('id', '=',$request->description)->first();
 
 
-        Pos::create($validated);
+        $currentQuantity = $inv->quantity;
+        
+        $inv->update([
+            'quantity' => $currentQuantity - $request->quantity
+        ]);
+
+        $description = $inv->name . ' - x' . $request->quantity;
+
+        $total = $request->amount * $request->quantity;
+
+
+        Pos::create([
+            'description' => $description,
+            'amount' => $total,
+            'type' => $request->type,
+        ]);
 
         return redirect(route('pos.index', absolute: false))->with('message', 'POS Entry created successfully!');
     }
