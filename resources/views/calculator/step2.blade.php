@@ -31,6 +31,9 @@
                 <input id="activity" class="block w-full mt-1" type="hidden" name="activity"
                     value="{{ $userprof->activity }}" />
 
+                     <input id="tdee" class="block w-full mt-1" type="hidden" name="tdee"
+                     />
+
                 <img src="{{ asset('assets/meter.png') }}" alt="">
 
                 <br>
@@ -103,6 +106,7 @@
             console.log(tdee);
 
             document.getElementById('bmi').innerHTML = bmi.toFixed(2);
+            document.getElementById('tdee').value = tdee;
 
             var bm = bmi.toFixed(2);
             var act = '';

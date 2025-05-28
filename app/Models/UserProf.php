@@ -17,5 +17,6 @@ class UserProf extends Model
         'goal',
         'date',
         'user_id',
+        'tdee',
     ];
 }

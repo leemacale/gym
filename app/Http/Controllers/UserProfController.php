@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\UserProf;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserProfController extends Controller
 {
@@ -14,6 +15,7 @@ class UserProfController extends Controller
     public function index()
     {
         //
+     
     }
     public function step1()
     {
@@ -59,6 +61,7 @@ class UserProfController extends Controller
             'weight' => ['required', 'string', 'max:255'],
             'height' => ['required', 'string', 'max:255'],
             'activity' => ['required', 'string', 'max:255'],
+            
 
         ]);
         $userprof = UserProf::create($validated);
@@ -75,6 +78,9 @@ class UserProfController extends Controller
         $userprof->update([
             'goal' => $request->goal,
             'date' => $request->date,
+            'tdee' => $request->tdee,
+            
+            
         ]);
 
         return redirect(route('calculator.step3', ['userprof' => $userprof]))->with('message', 'Profile updated successfully!');

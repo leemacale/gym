@@ -50,7 +50,7 @@
     <h1><b> Workout Recommendation </b></h1>
     <div class="cards-wrapper">
         <div class="card">
-            <h2>Day 1 – Push</h2>
+            <h2>Day 1 </h2>
             <strong>Warm-up:</strong>
             <ul class="exercise-list">
                 <li>5–10 min light cardio</li>
