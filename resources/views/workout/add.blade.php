@@ -15,6 +15,7 @@
                     <th>Category</th>
                     <th>Image</th>
                     <th>Equipment</th>
+            
 
                     <th></th>
                 </x-slot>
@@ -29,6 +30,7 @@
                                     href="/equipment/{{ $equipment->equipment->id }}/views">{{ $equipment->equipment->name }}</a>,
                             @endforeach
                         </td>
+                                   
                         <td>
 
                             <x-bladewind::button color="gray" icon="plus" title="add"

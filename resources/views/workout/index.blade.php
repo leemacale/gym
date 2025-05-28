@@ -27,6 +27,7 @@
                     <th>Exercise</th>
                     <th>Weight</th>
                     <th>Reps</th>
+                    <th>Remarks</th>
                     <th></th>
                 </x-slot>
                 @foreach ($workout as $workouts)
@@ -34,6 +35,7 @@
                         <td>{{ $workouts->exercise->name }}</td>
                         <td>{{ $workouts->weight }}</td>
                         <td>{{ $workouts->reps }}</td>
+                        <td>{{ $workouts->remarks }}</td>
                         <td>
                             <form method="POST" action="{{ route('workout.destroy', $workouts->id) }}">
                                 @csrf

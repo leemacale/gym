@@ -17,7 +17,7 @@
                     </x-nav-link>
                     @if (Auth::user()->role == 'admin')
                         <x-nav-link :href="route('pos.index')" :active="request()->routeIs('pos*')">
-                            {{ __('POS') }}
+                            {{ __('Sales') }}
                         </x-nav-link>
                         <x-nav-link :href="route('announcement.index')" :active="request()->routeIs('announcement*')">
                             {{ __('Announcements') }}
@@ -71,6 +71,9 @@
 
                     <x-slot name="content">
 
+                    <x-dropdown-link :href="route('weight.index')">
+                            {{ __('Weight Progress') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('calculator.index')">
                             {{ __('TDEE Calculator') }}
                         </x-dropdown-link>

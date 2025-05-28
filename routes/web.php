@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\AnnouncementsController;
 use App\Models\UserProf;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\EventsController;
+use App\Http\Controllers\WeightController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\CalendarController;
@@ -10,9 +12,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserProfController;
 use App\Http\Controllers\EquipmentController;
-use App\Http\Controllers\EventsController;
 use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\PosController;
+use App\Http\Controllers\AnnouncementsController;
 
 Route::get('/', function () {
     return view('landing.index');
@@ -54,6 +55,14 @@ Route::put('/inventory/store', [InventoryController::class, 'store'])->name('inv
 Route::get('/inventory/{inventories}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
 Route::delete('/inventory/{inventories}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 Route::patch('/inventory/{inventories}', [InventoryController::class, 'update'])->name('inventory.update');
+
+// weight
+Route::get('/weight', [WeightController::class, 'index'])->name('weight.index');
+Route::get('/weight/add', [WeightController::class, 'add'])->name('weight.add');
+Route::put('/weight/store', [WeightController::class, 'store'])->name('weight.store');
+Route::delete('/weight/{weights}', [WeightController::class, 'destroy'])->name('weight.destroy');
+Route::get('/chart/weights', [WeightController::class, 'weightChartData']);
+
 
 
 // equipment

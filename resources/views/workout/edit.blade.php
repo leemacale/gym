@@ -27,6 +27,11 @@
                     <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
                         :value="old('reps', $workouts->reps)" required autofocus autocomplete="reps" />
                     <x-input-error :messages="$errors->get('reps')" class="mt-2" />
+
+                      <x-input-label for="remarks" :value="__('Remarks')" />
+                    <x-text-input id="remarks" class="block w-full mt-1" type="text" name="remarks"
+                        :value="old('remarks', $workouts->remarks)" required autofocus autocomplete="remarks" />
+                    <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
                 </div>
 
 

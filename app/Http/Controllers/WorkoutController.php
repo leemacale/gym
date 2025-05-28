@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\workout;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Calendar;
 use App\Models\Exercise;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 
@@ -87,6 +88,7 @@ class WorkoutController extends Controller
             'date' => $date,
             'user_id' => $user_id,
             'weight' => $request->weight,
+            'remarks' => $request->remarks,
 
         ]);
 
@@ -120,6 +122,8 @@ class WorkoutController extends Controller
                 'date' => $newdate,
                 'user_id' => $newworkout->user_id,
                 'weight' => $newworkout->weight,
+            'remarks' => $newworkout->remarks,
+
 
             ]);
         }
@@ -170,6 +174,7 @@ class WorkoutController extends Controller
         $workouts->update([
             'reps' => $request->reps,
             'weight' => $request->weight,
+            'remarks' => $request->remarks,
         ]);
         return redirect(route('workout.index', absolute: false));
     }
@@ -185,4 +190,5 @@ class WorkoutController extends Controller
 
         return redirect(route('workout.index'))->with('message', 'Exercise deleted from Workout successfully!');
     }
+
 }
