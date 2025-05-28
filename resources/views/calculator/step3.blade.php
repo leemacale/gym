@@ -1,5 +1,6 @@
 @php
     use Carbon\Carbon;
+    use App\Models\Exercise;
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -50,64 +51,190 @@
     <h1><b> Workout Recommendation </b></h1>
     <div class="cards-wrapper">
         <div class="card">
-            <h2>Day 1 – Push</h2>
+            <h2>Day 1</h2>
             <strong>Warm-up:</strong>
-            <ul class="exercise-list">
-                <li>5–10 min light cardio</li>
-                <li>Shoulder mobility drills or band work</li>
+                <table>
+
+                    @php
+                       $warmup = Exercise::where('category_id', '9')->inRandomOrder()->first();
+                    @endphp
+            <tr>
+                <td>• {{$warmup->name ?? ''}} 30 sec to 1-min</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $warmup->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+          
+        </table>
             </ul>
             <strong>Workout:</strong>
-            <ul class="exercise-list">
-                <li>Barbell Bench Press – 4x6–8</li>
-                <li>Incline Dumbbell Press – 3x8–10</li>
-                <li>Standing Overhead Press – 3x6–8</li>
-                <li>Lateral Raises – 3x12–15</li>
-                <li>Cable Triceps Pushdowns – 3x10–12</li>
-                <li>Overhead DB Triceps Extension – 2x12–15</li>
+            <table  cellpadding="5" cellspacing="0" class="exercise-table border-1">
+
+                    @php
+                       $chest = Exercise::where('category_id', '8')->inRandomOrder()->first();
+                       $legs = Exercise::where('category_id', '2')->inRandomOrder()->first();
+                       $back = Exercise::where('category_id', '4')->inRandomOrder()->first();
+                       $rand1 = Exercise::inRandomOrder()->first();
+                       $rand2 = Exercise::inRandomOrder()->first();
+                 
+                    @endphp
+            <tr>
+                <td>• {{$chest->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $chest->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+              <tr>
+                <td>• {{$legs->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $legs->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            <tr>
+                <td>• {{$back->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $back->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand1->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand1->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand2->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand2->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            
+          
+        </table>
+          
+        </div>
+   <div class="card">
+            <h2>Day 2</h2>
+            <strong>Warm-up:</strong>
+                <table>
+
+                    @php
+                       $warmup = Exercise::where('category_id', '9')->inRandomOrder()->first();
+                    @endphp
+            <tr>
+                <td>• {{$warmup->name ?? ''}} 30 sec to 1-min</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $warmup->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+          
+        </table>
             </ul>
-            <button class="add-button" onclick="addToWorkout('Push')">Add to Workout</button>
-            <div class="message" id="msg-Push">Added Push workout!</div>
+            <strong>Workout:</strong>
+            <table  cellpadding="5" cellspacing="0" class="exercise-table border-1">
+
+                    @php
+                       $chest = Exercise::where('category_id', '8')->inRandomOrder()->first();
+                       $legs = Exercise::where('category_id', '2')->inRandomOrder()->first();
+                       $back = Exercise::where('category_id', '4')->inRandomOrder()->first();
+                       $rand1 = Exercise::inRandomOrder()->first();
+                       $rand2 = Exercise::inRandomOrder()->first();
+                 
+                    @endphp
+            <tr>
+                <td>• {{$chest->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $chest->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+              <tr>
+                <td>• {{$legs->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $legs->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            <tr>
+                <td>• {{$back->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $back->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand1->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand1->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand2->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand2->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            
+          
+        </table>
+          
         </div>
 
-        <div class="card">
-            <h2>Day 2 – Pull</h2>
+           <div class="card">
+            <h2>Day 3</h2>
             <strong>Warm-up:</strong>
-            <ul class="exercise-list">
-                <li>5–10 min rowing or light cardio</li>
-                <li>Shoulder activation/mobility</li>
+                <table>
+
+                    @php
+                       $warmup = Exercise::where('category_id', '9')->inRandomOrder()->first();
+                    @endphp
+            <tr>
+                <td>• {{$warmup->name ?? ''}} 30 sec to 1-min</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $warmup->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+          
+        </table>
             </ul>
             <strong>Workout:</strong>
-            <ul class="exercise-list">
-                <li>Deadlifts or Rack Pulls – 4x5–6</li>
-                <li>Pull-Ups or Lat Pulldown – 3x8–10</li>
-                <li>Bent Over Barbell Rows – 3x8–10</li>
-                <li>Seated Cable Rows – 3x10–12</li>
-                <li>Face Pulls – 3x15–20</li>
-                <li>EZ Bar Curls or DB Curls – 3x10–12</li>
-            </ul>
-            <button class="add-button" onclick="addToWorkout('Pull')">Add to Workout</button>
-            <div class="message" id="msg-Pull">Added Pull workout!</div>
+            <table  cellpadding="5" cellspacing="0" class="exercise-table border-1">
+
+                    @php
+                       $chest = Exercise::where('category_id', '8')->inRandomOrder()->first();
+                       $legs = Exercise::where('category_id', '2')->inRandomOrder()->first();
+                       $back = Exercise::where('category_id', '4')->inRandomOrder()->first();
+                       $rand1 = Exercise::inRandomOrder()->first();
+                       $rand2 = Exercise::inRandomOrder()->first();
+                 
+                    @endphp
+            <tr>
+                <td>• {{$chest->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $chest->id ?? '') }}')"></x-bladewind::button></td>
+            </tr>
+              <tr>
+                <td>• {{$legs->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $legs->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            <tr>
+                <td>• {{$back->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $back->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand1->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand1->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+              <tr>
+                <td>• {{$rand2->name ?? ''}} 3 sets 8-10 reps</td>
+                <td> <x-bladewind::button color="gray" icon="plus" title="add to workout"
+        onclick="window.open('{{ route('workout.addlog', $rand2->id ?? '') }}')"></x-bladewind::button></td>
+
+            </tr>
+            
+          
+        </table>
+          
         </div>
 
-        <div class="card">
-            <h2>Day 3 – Legs</h2>
-            <strong>Warm-up:</strong>
-            <ul class="exercise-list">
-                <li>5–10 min cycling or light jog</li>
-                <li>Dynamic leg stretches (leg swings, lunges)</li>
-            </ul>
-            <strong>Workout:</strong>
-            <ul class="exercise-list">
-                <li>Barbell Back Squats – 4x6–8</li>
-                <li>Romanian Deadlifts – 3x8–10</li>
-                <li>Leg Press – 3x10–12</li>
-                <li>Walking Lunges – 2x12/leg</li>
-                <li>Leg Curls (Machine) – 3x12–15</li>
-                <li>Standing Calf Raises – 4x15–20</li>
-            </ul>
-            <button class="add-button" onclick="addToWorkout('Legs')">Add to Workout</button>
-            <div class="message" id="msg-Legs">Added Legs workout!</div>
-        </div>
     </div>
 
     <style>

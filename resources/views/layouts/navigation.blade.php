@@ -203,7 +203,10 @@
     }
 </style>
 
+@if (Auth::user()->role == 'admin' || Auth::user()->role == 'member')
+    <a href="/scanner" class="floating-button" title="Open Camera">
+        📷
+    </a>
+    
+@endif
 
-<a href="/scanner" class="floating-button" title="Open Camera">
-    📷
-</a>
