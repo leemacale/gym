@@ -14,6 +14,7 @@ use App\Http\Controllers\UserProfController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\AnnouncementsController;
+use App\Http\Controllers\ProgramController;
 
 Route::get('/', function () {
     return view('landing.index');
@@ -130,6 +131,25 @@ Route::get('/workout/{exercises}/addlog', [WorkoutController::class, 'addlog'])-
 Route::get('/workout/{workouts}/edit', [WorkoutController::class, 'edit'])->name('workout.edit');
 Route::delete('/workout/{workouts}', [WorkoutController::class, 'destroy'])->name('workout.destroy');
 Route::patch('/workout/{workouts}', [WorkoutController::class, 'update'])->name('workout.update');
+
+
+
+// program
+Route::get('/program', [ProgramController::class, 'index'])->name('program.index');
+Route::get('/program/add', [ProgramController::class, 'add'])->name('program.add');
+Route::put('/program/store', [ProgramController::class, 'store'])->name('program.store');
+Route::delete('/program/{programs}', [ProgramController::class, 'destroy'])->name('program.destroy');
+Route::get('/program/{programs}/edit', [ProgramController::class, 'edit'])->name('program.edit');
+
+
+//programexercise
+Route::get('/workout2/add/{program}', [WorkoutController::class, 'add2'])->name('workout2.add');
+Route::put('/workout2/store', [WorkoutController::class, 'store2'])->name('workout2.store');
+Route::get('/workout2/{exercises}/addlog/{program}', [WorkoutController::class, 'addlog2'])->name('workout2.addlog');
+Route::get('/workout2/{workouts}/edit/{program}', [WorkoutController::class, 'edit2'])->name('workout2.edit');
+Route::delete('/workout2/{workouts}/{program}', [WorkoutController::class, 'destroy2'])->name('workout2.destroy');
+Route::patch('/workout2/{workouts}', [WorkoutController::class, 'update2'])->name('workout2.update');
+
 
 
 // calendar

@@ -77,6 +77,9 @@
                         <x-dropdown-link :href="route('calculator.index')">
                             {{ __('TDEE Calculator') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('program.index')">
+                            {{ __('Programs') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
