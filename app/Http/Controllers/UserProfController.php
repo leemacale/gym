@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Program;
 use App\Models\UserProf;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfController extends Controller
 {
@@ -34,10 +36,65 @@ class UserProfController extends Controller
 
     public function step3(UserProf $userprof)
     {
-        //
+        // Names for recommended programs
+        $recommendedNames = [
+            "Recommended Program 1",
+            "Recommended Program 2",
+            "Recommended Program 3"
+        ];
 
+        $userId = Auth::user()->id;
 
-        return view('calculator.step3', ['userprof' => $userprof]);
+        foreach ($recommendedNames as $name) {
+            $program = Program::where('user_id', $userId)
+                ->where('name', $name)
+                ->first();
+
+            if (!$program) {
+                $program = Program::create([
+                    'name' => $name,
+                    'user_id' => $userId,
+                ]);
+
+                // Get 1 random warm-up exercise (category_id = 9)
+                $warmup = \App\Models\Exercise::where('category_id', 9)->inRandomOrder()->first();
+                if ($warmup) {
+                    for ($i = 0; $i < 3; $i++) {
+                        $program->exercises()->create([
+                            'exercise_id' => $warmup->id,
+                            'weight' => rand(5, 10),
+                            'reps' => 8,
+                            'remarks' => 'Set ' . ($i + 1),
+                            'date' => now()->toDateString(),
+                        ]);
+                    }
+                }
+
+                // Add 5 other random (non-warmup) exercises, each repeated 3 times
+                $randomExercises = \App\Models\Exercise::where('category_id', '!=', 9)
+                    ->inRandomOrder()
+                    ->limit(5)
+                    ->get();
+
+                foreach ($randomExercises as $exercise) {
+                    for ($i = 0; $i < 3; $i++) {
+                        $program->exercises()->create([
+                            'exercise_id' => $exercise->id,
+                            'weight' => rand(5, 10),
+                            'reps' => 8,
+                            'remarks' => 'Set ' . ($i + 1),
+                            'date' => now()->toDateString(),
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $program = Program::where('user_id', $userId)
+            ->whereIn('name', $recommendedNames)
+            ->get();
+
+        return view('calculator.step3', ['userprof' => $userprof, 'program' => $program]);
     }
 
     /**

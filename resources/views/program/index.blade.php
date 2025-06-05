@@ -11,7 +11,7 @@
         </x-slot>
 
 
-        <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-3 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($program as $programs)
                 <div class="flex flex-col p-6 bg-white rounded-lg shadow">
                     <div class="flex flex-col items-center mb-4">

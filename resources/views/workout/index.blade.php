@@ -37,7 +37,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $lastExerciseName = null; @endphp
                                 @forelse ($programs->exercises as $exercises)
+                                    @if ($lastExerciseName !== null && $lastExerciseName !== $exercises->exercise->name)
+                                        <tr>
+                                            <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
+                                        </tr>
+                                    @endif
                                     <tr>
                                         <td class="px-2 py-1 border">{{ $exercises->exercise->name }}</td>
                                         <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
@@ -48,9 +54,10 @@
                                                 onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
                                         </td>
                                     </tr>
+                                    @php $lastExerciseName = $exercises->exercise->name; @endphp
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
+                                        <td colspan="5" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -70,7 +77,13 @@
                             <th>Remarks</th>
                             <th></th>
                         </x-slot>
+                        @php $lastExerciseName = null; @endphp
                         @foreach ($workout as $workouts)
+                            @if ($lastExerciseName !== null && $lastExerciseName !== $workouts->exercise->name)
+                                <tr>
+                                    <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td>{{ $workouts->exercise->name }}</td>
                                 <td>{{ $workouts->weight }}</td>
@@ -87,6 +100,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @php $lastExerciseName = $workouts->exercise->name; @endphp
                         @endforeach
                     </x-bladewind::table>
                 </div>
