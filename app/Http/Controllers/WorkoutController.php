@@ -22,6 +22,8 @@ class WorkoutController extends Controller
     public function index()
     {
 
+            $program = Program::get();
+
         $mytime = Carbon::now();
         $now = $mytime->toDateString();
         $date = request()->date;
@@ -35,7 +37,8 @@ class WorkoutController extends Controller
 
         return view('workout.index', [
             'workout' => $workout,
-            'date' => $date
+            'date' => $date,
+            'program' => $program
         ]);
     }
 
@@ -60,8 +63,11 @@ class WorkoutController extends Controller
     public function add()
     {
         $exercise = Exercise::get();
+            $program = Program::get();
+
         return view('workout.add', [
-            'exercise' => $exercise
+            'exercise' => $exercise,
+            'program' => $program
         ]);
     }
 
@@ -76,11 +82,14 @@ class WorkoutController extends Controller
 
     public function addlog(Exercise $exercises)
     {
+            $program = Program::get();
 
         return view('workout.addlog', [
-            'exercise' => $exercises
+            'exercise' => $exercises,
+            'program' => $program
         ]);
     }
+    
 
      public function addlog2(Exercise $exercises,  Program $program)
     {
@@ -197,15 +206,36 @@ class WorkoutController extends Controller
         //
     }
 
+    public function userprogram(Program $programs)
+    {
+        //
+
+        foreach($programs->exercises as $exercise) {
+            Workout::create([
+                'reps' => $exercise->reps,
+                'exercise_id' => $exercise->exercise_id,
+                'date' => Carbon::now()->toDateString(),
+                   'user_id' => Auth::user()->id,
+                'weight' => $exercise->weight,
+                'remarks' => $exercise->remarks,
+            ]);
+        }
+
+                return redirect(route('workout.index', absolute: false))->with('message', 'Exercise added to Workout successfully!');
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(workout $workouts)
     {
         //
+         $program = Program::get();
 
         return view('workout.edit', [
-            'workouts' => $workouts
+            'workouts' => $workouts,
+            'program' => $program
         ]);
     }
 

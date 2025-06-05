@@ -132,7 +132,7 @@ Route::get('/workout/{workouts}/edit', [WorkoutController::class, 'edit'])->name
 Route::delete('/workout/{workouts}', [WorkoutController::class, 'destroy'])->name('workout.destroy');
 Route::patch('/workout/{workouts}', [WorkoutController::class, 'update'])->name('workout.update');
 
-
+Route::get('/workout/userprogram/{programs}', [WorkoutController::class, 'userprogram'])->name('workout.useprogram');
 
 // program
 Route::get('/program', [ProgramController::class, 'index'])->name('program.index');

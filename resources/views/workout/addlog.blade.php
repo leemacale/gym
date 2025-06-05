@@ -1,51 +1,100 @@
 <x-app-layout>
-    <div class="flex items-center justify-center ">
-        <div class="justify-center w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
+    <div class="flex items-center justify-center">
+        <div class="w-full px-6 py-4 mt-6 overflow-hidden">
             <x-slot name="header">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     {{ __('Add Exercise') }}
                 </h2>
-
             </x-slot>
-            <form method="POST" action="{{ route(name: 'workout.store') }}">
-                @csrf
-                @method('PUT')
+
+            <div class="flex gap-6 mt-6">
+                <!-- Left: Empty 1/3 -->
+                <div class="w-1/3 max-h-[80vh] overflow-y-auto space-y-4">
+                 @foreach ($program as $programs)
+                    <div class="flex flex-col p-4 bg-white rounded-lg shadow">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold">{{ $programs->name }}</h3>
+                            <div class="flex gap-1">
+                                <x-bladewind::button color="gray" icon="pencil-square" title="edit"
+                                    onclick="window.location='{{ route('program.edit', $programs->id) }}'">Customize</x-bladewind::button>
+                            </div>
+                        </div>
+                        <table class="min-w-full text-xs border">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-2 py-1 border">Exercise</th>
+                                    <th class="px-2 py-1 border">Weight</th>
+                                        <th class="px-2 py-1 border">Reps</th>
+                                    <th class="px-2 py-1 border">Remarks</th>
+                                
+                                    <th class="px-2 py-1 border"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($programs->exercises as $exercises)
+                                    <tr>
+                                        <td class="px-2 py-1 border">{{ $exercises->exercise->name }}</td>
+                                        <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
+                                          <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        <td class="px-2 py-1 border">{{ $exercises->remarks }}</td>
+                                      
+                                        <td class="px-2 py-1 border">   
+                                                                  <x-bladewind::button color="gray" icon="plus" title="add"
+                                onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button></td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach</div>
+
+                <!-- Right: Form in 2/3 card -->
+                <div class="w-2/3">
+                    <div class="px-6 py-4 bg-white rounded-lg shadow-md">
+                        <form method="POST" action="{{ route('workout.store') }}">
+                            @csrf
+                            @method('PUT')
+
+                            <h1><b>{{ $exercise->name }}</b></h1>
+                            <hr><br>
+                            <div>
+                                <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
+                                <x-input-label for="weight" :value="__('Weight (kg)')" />
+                                <x-text-input id="weight" class="block w-full mt-1" type="number" name="weight"
+                                    :value="old('weight')" required autofocus autocomplete="weight" />
+                                <x-input-error :messages="$errors->get('weight')" class="mt-2" />
 
 
-                <h1><b>{{ $exercise->name }}</b></h1>
-                <hr><br>
-                <!-- Name -->
-                <div>
-                    <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
-                    <x-input-label for="weight" :value="__('Weight (kg)')" />
-                    <x-text-input id="weight" class="block w-full mt-1" type="number" name="weight"
-                        :value="old('weight')" required autofocus autocomplete="weight" />
-                    <x-input-error :messages="$errors->get('weight')" class="mt-2" />
+                                <x-input-label for="reps" :value="__('Reps')" />
+                                <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
+                                    :value="old('reps')" required autofocus autocomplete="reps" />
+                                <x-input-error :messages="$errors->get('reps')" class="mt-2" />
 
 
-                    <x-input-label for="reps" :value="__('Reps')" />
-                    <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
-                        :value="old('reps')" required autofocus autocomplete="reps" />
-                    <x-input-error :messages="$errors->get('reps')" class="mt-2" />
+                                <x-input-label for="remarks" :value="__('Remarks')" />
+                                <x-text-input id="remarks" class="block w-full mt-1" type="text" name="remarks"
+                                    :value="old('remarks')" required autofocus autocomplete="remarks" />
+                                <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
+                            </div>
 
 
-                    <x-input-label for="remarks" :value="__('Remarks')" />
-                    <x-text-input id="remarks" class="block w-full mt-1" type="text" name="remarks"
-                        :value="old('remarks')" required autofocus autocomplete="remarks" />
-                    <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
+                            <div class="flex items-center justify-end mt-4">
+
+
+                                <x-primary-button class="ms-4">
+                                    {{ __('Add') }}
+                                </x-primary-button>
+                                <x-secondary-button color="gray"
+                                    onclick="window.location='{{ route('workout.index') }}'">Cancel</x-secondary-button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-
-                <div class="flex items-center justify-end mt-4">
-
-
-                    <x-primary-button class="ms-4">
-                        {{ __('Add') }}
-                    </x-primary-button>
-                    <x-secondary-button color="gray" 
-                                        onclick="window.location='{{ route('workout.index') }}'">Cancel</x-secondary-button >
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </x-app-layout>

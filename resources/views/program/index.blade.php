@@ -14,9 +14,9 @@
         <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($program as $programs)
                 <div class="flex flex-col p-6 bg-white rounded-lg shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold">{{ $programs->name }}</h3>
-                        <div class="flex gap-2">
+                    <div class="flex flex-col items-center mb-4">
+                        <h3 class="w-full text-lg font-bold text-center">{{ $programs->name }}</h3>
+                        <div class="flex gap-2 mt-2">
                             <x-bladewind::button color="gray" icon="pencil-square" title="edit"
                                 onclick="window.location='{{ route('program.edit', $programs->id) }}'">CUSTOMIZE</x-bladewind::button>
                             <form method="POST" action="{{ route('program.destroy', $programs->id) }}">
@@ -31,7 +31,6 @@
                             <tr class="bg-gray-100">
                                 <th class="px-2 py-1 border">Exercise</th>
                                 <th class="px-2 py-1 border">Weight</th>
-                                
                                 <th class="px-2 py-1 border">Reps</th>
                                 <th class="px-2 py-1 border">Remarks</th>
                             </tr>
@@ -41,7 +40,6 @@
                                 <tr>
                                     <td class="px-2 py-1 border">{{ $exercise->exercise->name }}</td>
                                     <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
-                                    
                                     <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
                                     <td class="px-2 py-1 border">{{ $exercise->remarks }}</td>
                                 </tr>
@@ -52,6 +50,12 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="flex justify-center mt-4">
+                        <x-bladewind::button color="primary" icon="check-circle"
+                            onclick="window.location='{{ route('workout.useprogram', $programs->id) }}'">
+                            Use This Program
+                        </x-bladewind::button>
+                    </div>
                 </div>
             @endforeach
         </div>
