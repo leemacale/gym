@@ -7,7 +7,7 @@
                 </h2>
 
             </x-slot>
-   <div class="flex gap-6 mt-6">
+    <div class="flex gap-6 mt-6">
             <!-- Left: Programs List (1/3) -->
             <div class="w-1/3 max-h-[80vh] overflow-y-auto space-y-4">
                 @foreach ($program as $programs)
@@ -22,29 +22,76 @@
                         <table class="min-w-full text-xs border">
                             <thead>
                                 <tr class="bg-gray-100">
+                                    @php
+                                        // Check if first exercise is cardio for header
+                                        $firstExercise = $programs->exercises->first();
+                                        $isCardio = $firstExercise && $firstExercise->exercise->category && strtolower($firstExercise->exercise->category->name) === 'cardio';
+                                    @endphp
                                     <th class="px-2 py-1 border">Exercise</th>
-                                    <th class="px-2 py-1 border">Weight</th>
-                                      <th class="px-2 py-1 border">Reps</th>
+                                    @if($isCardio)
+                                        <th class="px-2 py-1 border">Resistance</th>
+                                        <th class="px-2 py-1 border">Time</th>
+                                    @else
+                                        <th class="px-2 py-1 border">Weight</th>
+                                        <th class="px-2 py-1 border">Reps</th>
+                                    @endif
                                     <th class="px-2 py-1 border">Remarks</th>
-                                  
                                     <th class="px-2 py-1 border"></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @php 
+                                    $lastExerciseName = null; 
+                                    $lastIsCardio = null;
+                                @endphp
                                 @forelse ($programs->exercises as $exercises)
+                                    @php
+                                        $isCardioRow = $exercises->exercise->category && strtolower($exercises->exercise->category->name) === 'cardio';
+                                    @endphp
+
+                                    {{-- Insert new header row if cardio/strength type changes --}}
+                                    @if($lastIsCardio !== null && $lastIsCardio !== $isCardioRow)
+                                        <tr class="font-bold bg-gray-100">
+                                            <td class="px-2 py-1 border">Exercise</td>
+                                            @if($isCardioRow)
+                                                <td class="px-2 py-1 border">Resistance</td>
+                                                <td class="px-2 py-1 border">Time</td>
+                                            @else
+                                                <td class="px-2 py-1 border">Weight</td>
+                                                <td class="px-2 py-1 border">Reps</td>
+                                            @endif
+                                            <td class="px-2 py-1 border">Remarks</td>
+                                            <td class="px-2 py-1 border"></td>
+                                        </tr>
+                                    @endif
+
+                                    @if ($lastExerciseName !== null && $lastExerciseName !== $exercises->exercise->name)
+                                        <tr>
+                                            <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
+                                        </tr>
+                                    @endif
                                     <tr>
                                         <td class="px-2 py-1 border">{{ $exercises->exercise->name }}</td>
-                                        <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
-                                           <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @if($isCardioRow)
+                                            <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
+                                            <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @else
+                                            <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
+                                            <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @endif
                                         <td class="px-2 py-1 border">{{ $exercises->remarks }}</td>
-                                     
-                                        <td class="px-2 py-1 border">   
-                                                                  <x-bladewind::button color="gray" icon="plus" title="add"
-                                onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button></td>
+                                        <td class="px-2 py-1 border">
+                                            <x-bladewind::button color="gray" icon="plus" title="add"
+                                                onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
+                                        </td>
                                     </tr>
+                                    @php 
+                                        $lastExerciseName = $exercises->exercise->name; 
+                                        $lastIsCardio = $isCardioRow;
+                                    @endphp
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
+                                        <td colspan="5" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
                                     </tr>
                                 @endforelse
                             </tbody>

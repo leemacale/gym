@@ -29,16 +29,49 @@
                         <table class="min-w-full text-xs border">
                             <thead>
                                 <tr class="bg-gray-100">
+                                    @php
+                                        // Check if first exercise is cardio for header
+                                        $firstExercise = $programs->exercises->first();
+                                        $isCardio = $firstExercise && $firstExercise->exercise->category && strtolower($firstExercise->exercise->category->name) === 'cardio';
+                                    @endphp
                                     <th class="px-2 py-1 border">Exercise</th>
-                                    <th class="px-2 py-1 border">Weight</th>
-                                    <th class="px-2 py-1 border">Reps</th>
+                                    @if($isCardio)
+                                        <th class="px-2 py-1 border">Resistance</th>
+                                        <th class="px-2 py-1 border">Time</th>
+                                    @else
+                                        <th class="px-2 py-1 border">Weight</th>
+                                        <th class="px-2 py-1 border">Reps</th>
+                                    @endif
                                     <th class="px-2 py-1 border">Remarks</th>
                                     <th class="px-2 py-1 border"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $lastExerciseName = null; @endphp
+                                @php 
+                                    $lastExerciseName = null; 
+                                    $lastIsCardio = null;
+                                @endphp
                                 @forelse ($programs->exercises as $exercises)
+                                    @php
+                                        $isCardioRow = $exercises->exercise->category && strtolower($exercises->exercise->category->name) === 'cardio';
+                                    @endphp
+
+                                    {{-- Insert new header row if cardio/strength type changes --}}
+                                    @if($lastIsCardio !== null && $lastIsCardio !== $isCardioRow)
+                                        <tr class="font-bold bg-gray-100">
+                                            <td class="px-2 py-1 border">Exercise</td>
+                                            @if($isCardioRow)
+                                                <td class="px-2 py-1 border">Resistance</td>
+                                                <td class="px-2 py-1 border">Time</td>
+                                            @else
+                                                <td class="px-2 py-1 border">Weight</td>
+                                                <td class="px-2 py-1 border">Reps</td>
+                                            @endif
+                                            <td class="px-2 py-1 border">Remarks</td>
+                                            <td class="px-2 py-1 border"></td>
+                                        </tr>
+                                    @endif
+
                                     @if ($lastExerciseName !== null && $lastExerciseName !== $exercises->exercise->name)
                                         <tr>
                                             <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
@@ -46,15 +79,23 @@
                                     @endif
                                     <tr>
                                         <td class="px-2 py-1 border">{{ $exercises->exercise->name }}</td>
-                                        <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
-                                        <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @if($isCardioRow)
+                                            <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
+                                            <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @else
+                                            <td class="px-2 py-1 border">{{ $exercises->weight }}</td>
+                                            <td class="px-2 py-1 border">{{ $exercises->reps }}</td>
+                                        @endif
                                         <td class="px-2 py-1 border">{{ $exercises->remarks }}</td>
                                         <td class="px-2 py-1 border">
                                             <x-bladewind::button color="gray" icon="plus" title="add"
                                                 onclick="window.location='{{ route('workout.addlog', $exercises->exercise->id) }}'">Add</x-bladewind::button>
                                         </td>
                                     </tr>
-                                    @php $lastExerciseName = $exercises->exercise->name; @endphp
+                                    @php 
+                                        $lastExerciseName = $exercises->exercise->name; 
+                                        $lastIsCardio = $isCardioRow;
+                                    @endphp
                                 @empty
                                     <tr>
                                         <td colspan="5" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
@@ -70,15 +111,47 @@
             <div class="w-2/3">
                 <div class="bg-white divide-y rounded-lg shadow-sm overflow-x">
                     <x-bladewind::table compact="true" divider="thin" striped="true" celled="true" class="overflow-scroll">
+                        @php 
+                            $lastExerciseName = null; 
+                            $lastIsCardio = null;
+                            $firstWorkout = $workout->first();
+                            $isCardio = $firstWorkout && $firstWorkout->exercise->category && strtolower($firstWorkout->exercise->category->name) === 'cardio';
+                        @endphp
                         <x-slot name="header">
-                            <th>Exercise</th>
-                            <th>Weight</th>
-                            <th>Reps</th>
-                            <th>Remarks</th>
-                            <th></th>
+                            <tr class="bg-gray-100">
+                                <th>Exercise</th>
+                                @if($isCardio)
+                                    <th>Resistance</th>
+                                    <th>Time</th>
+                                @else
+                                    <th>Weight</th>
+                                    <th>Reps</th>
+                                @endif
+                                <th>Remarks</th>
+                                <th></th>
+                            </tr>
                         </x-slot>
-                        @php $lastExerciseName = null; @endphp
                         @foreach ($workout as $workouts)
+                            @php
+                                $isCardioRow = $workouts->exercise->category && strtolower($workouts->exercise->category->name) === 'cardio';
+                            @endphp
+
+                            {{-- Insert new header row if cardio/strength type changes --}}
+                            @if($lastIsCardio !== null && $lastIsCardio !== $isCardioRow)
+                                <tr class="font-bold bg-gray-100">
+                                    <td>Exercise</td>
+                                    @if($isCardioRow)
+                                        <td>Resistance</td>
+                                        <td>Time</td>
+                                    @else
+                                        <td>Weight</td>
+                                        <td>Reps</td>
+                                    @endif
+                                    <td>Remarks</td>
+                                    <td></td>
+                                </tr>
+                            @endif
+
                             @if ($lastExerciseName !== null && $lastExerciseName !== $workouts->exercise->name)
                                 <tr>
                                     <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
@@ -86,8 +159,13 @@
                             @endif
                             <tr>
                                 <td>{{ $workouts->exercise->name }}</td>
-                                <td>{{ $workouts->weight }}</td>
-                                <td>{{ $workouts->reps }}</td>
+                                @if($isCardioRow)
+                                    <td>{{ $workouts->weight }}</td>
+                                    <td>{{ $workouts->reps }}</td>
+                                @else
+                                    <td>{{ $workouts->weight }}</td>
+                                    <td>{{ $workouts->reps }}</td>
+                                @endif
                                 <td>{{ $workouts->remarks }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('workout.destroy', $workouts->id) }}">
@@ -100,7 +178,10 @@
                                     </form>
                                 </td>
                             </tr>
-                            @php $lastExerciseName = $workouts->exercise->name; @endphp
+                            @php 
+                                $lastExerciseName = $workouts->exercise->name; 
+                                $lastIsCardio = $isCardioRow;
+                            @endphp
                         @endforeach
                     </x-bladewind::table>
                 </div>

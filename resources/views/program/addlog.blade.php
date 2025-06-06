@@ -16,17 +16,26 @@
                 <hr><br>
                 <!-- Name -->
                 <div>
-
-
                     <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
                     <input type="hidden" name="program_id" value="{{ $program->id }}">
-                    <x-input-label for="weight" :value="__('Weight (kg)')" />
+
+                    {{-- Weight/Resistance --}}
+                    @if($exercise->category && strtolower($exercise->category->name) === 'cardio')
+                        <x-input-label for="weight" :value="__('Resistance ')" />
+                    @else
+                        <x-input-label for="weight" :value="__('Weight (kg)')" />
+                    @endif
                     <x-text-input id="weight" class="block w-full mt-1" type="number" name="weight"
                         :value="old('weight')" required autofocus autocomplete="weight" />
                     <x-input-error :messages="$errors->get('weight')" class="mt-2" />
 
 
-                    <x-input-label for="reps" :value="__('Reps')" />
+                    {{-- Reps/Time --}}
+                    @if($exercise->category && strtolower($exercise->category->name) === 'cardio')
+                        <x-input-label for="reps" :value="__('Time (seconds)')" />
+                    @else
+                        <x-input-label for="reps" :value="__('Reps')" />
+                    @endif
                     <x-text-input id="reps" class="block w-full mt-1" type="number" name="reps"
                         :value="old('reps')" required autofocus autocomplete="reps" />
                     <x-input-error :messages="$errors->get('reps')" class="mt-2" />

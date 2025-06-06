@@ -2480,6 +2480,7 @@ namespace App\Models {
     /**
      * App\Models\Pos
      *
+     * @property string|null $size
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $type
@@ -2492,6 +2493,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos whereSize($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Pos>|Pos query()
@@ -3098,6 +3100,7 @@ namespace App\Models {
     /**
      * App\Models\User
      *
+     * @property bool $is_approved
      * @property string $type
      * @property string $role
      * @property \Illuminate\Support\Carbon|null $updated_at
@@ -3121,6 +3124,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRole($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereType($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereIsApproved($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User query()
