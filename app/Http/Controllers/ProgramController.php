@@ -17,7 +17,7 @@ class ProgramController extends Controller
     {
         //
          //
-        $program = Program::where('user_id','=', Auth::user()->id)->get();
+        $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')->get();
 
 
         return view('program.index', [

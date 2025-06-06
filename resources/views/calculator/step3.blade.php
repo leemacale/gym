@@ -137,10 +137,19 @@
                 </tbody>
             </table>
             <div class="flex justify-center mt-4">
-                <x-bladewind::button color="primary" icon="check-circle"
+                @if (Auth::user()->role == 'admin' || Auth::user()->type == 'Member')
+    <x-bladewind::button color="primary" icon="check-circle"
                     onclick="window.location='{{ route('workout.useprogram', $programs->id) }}'">
                     Use This Program
                 </x-bladewind::button>
+@else
+ <x-bladewind::button color="primary" icon="check-circle"
+                    onclick="alert('This feature is for members only.')">
+                    Use This Program
+                </x-bladewind::button>
+   
+@endif
+               
             </div>
         </div>
     @endforeach

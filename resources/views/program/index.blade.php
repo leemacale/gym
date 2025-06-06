@@ -17,13 +17,21 @@
                     <div class="flex flex-col items-center mb-4">
                         <h3 class="w-full text-lg font-bold text-center">{{ $programs->name }}</h3>
                         <div class="flex gap-2 mt-2">
-                            <x-bladewind::button color="gray" icon="pencil-square" title="edit"
-                                onclick="window.location='{{ route('program.edit', $programs->id) }}'">CUSTOMIZE</x-bladewind::button>
-                            <form method="POST" action="{{ route('program.destroy', $programs->id) }}">
+
+    @if(
+        Auth::user()->role == 'admin' ||
+        !(($programs->user_id == 1) || (Str::contains(strtolower($programs->name), 'recommended')))
+    )
+        <x-bladewind::button color="gray" icon="pencil-square" title="edit"
+            onclick="window.location='{{ route('program.edit', $programs->id) }}'">Customize</x-bladewind::button>
+      <form method="POST" action="{{ route('program.destroy', $programs->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 <x-bladewind::button color="gray" icon="trash" title="delete" can_submit="true">DELETE</x-bladewind::button>
                             </form>
+            @endif
+
+                          
                         </div>
                     </div>
                     <table class="min-w-full text-sm border">
@@ -99,11 +107,22 @@
                         </tbody>
                     </table>
                     <div class="flex justify-center mt-4">
-                        <x-bladewind::button color="primary" icon="check-circle"
-                            onclick="window.location='{{ route('workout.useprogram', $programs->id) }}'">
-                            Use This Program
-                        </x-bladewind::button>
-                    </div>
+
+                              @if (Auth::user()->role == 'admin' || Auth::user()->type == 'Member')
+    <x-bladewind::button color="primary" icon="check-circle"
+                    onclick="window.location='{{ route('workout.useprogram', $programs->id) }}'">
+                    Use This Program
+                </x-bladewind::button>
+@else
+ <x-bladewind::button color="primary" icon="check-circle"
+                    onclick="alert('This feature is for members only.')">
+                    Use This Program
+                </x-bladewind::button>
+   
+@endif
+               
+            </div>
+                     
                 </div>
             @endforeach
         </div>

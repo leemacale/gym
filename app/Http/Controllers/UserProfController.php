@@ -46,8 +46,8 @@ class UserProfController extends Controller
         $userId = Auth::user()->id;
 
         foreach ($recommendedNames as $name) {
-            $program = Program::where('user_id', $userId)
-                ->where('name', $name)
+               $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')
+               ->where('name', $name)
                 ->first();
 
             if (!$program) {
@@ -90,8 +90,8 @@ class UserProfController extends Controller
             }
         }
 
-        $program = Program::where('user_id', $userId)
-            ->whereIn('name', $recommendedNames)
+     $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')
+     ->whereIn('name', $recommendedNames)
             ->get();
 
         return view('calculator.step3', ['userprof' => $userprof, 'program' => $program]);

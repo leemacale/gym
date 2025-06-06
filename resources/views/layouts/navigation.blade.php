@@ -206,10 +206,13 @@
     }
 </style>
 
-@if (Auth::user()->role == 'admin' || Auth::user()->role == 'Member')
+@if (Auth::user()->role == 'admin' || Auth::user()->type == 'Member')
     <a href="/scanner" class="floating-button" title="Open Camera">
         📷
     </a>
-    
+@else
+    <a href="javascript:void(0);" class="floating-button" title="Open Camera" onclick="alert('This feature is for members only.')">
+        <i class="fas fa-camera"></i>
+    </a>
 @endif
 
