@@ -45,54 +45,61 @@ class UserProfController extends Controller
 
         $userId = Auth::user()->id;
 
-        foreach ($recommendedNames as $name) {
-               $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')
-               ->where('name', $name)
-                ->first();
+        // Only create recommended programs if they do not exist for this user
+        $existingProgramsCount = Program::where('user_id', $userId)
+            ->whereIn('name', $recommendedNames)
+            ->count();
 
-            if (!$program) {
-                $program = Program::create([
-                    'name' => $name,
-                    'user_id' => $userId,
-                ]);
+        if ($existingProgramsCount < count($recommendedNames)) {
+            foreach ($recommendedNames as $name) {
+                $program = Program::where('user_id', $userId)
+                    ->where('name', $name)
+                    ->first();
 
-                // Get 1 random warm-up exercise (category_id = 9)
-                $warmup = \App\Models\Exercise::where('category_id', 9)->inRandomOrder()->first();
-                if ($warmup) {
-                    for ($i = 0; $i < 3; $i++) {
-                        $program->exercises()->create([
-                            'exercise_id' => $warmup->id,
-                            'weight' => rand(5, 10),
-                            'reps' => 8,
-                            'remarks' => 'Set ' . ($i + 1),
-                            'date' => now()->toDateString(),
-                        ]);
+                if (!$program) {
+                    $program = Program::create([
+                        'name' => $name,
+                        'user_id' => $userId,
+                    ]);
+
+                    // Get 1 random warm-up exercise (category_id = 9)
+                    $warmup = \App\Models\Exercise::where('category_id', 9)->inRandomOrder()->first();
+                    if ($warmup) {
+                        for ($i = 0; $i < 3; $i++) {
+                            $program->exercises()->create([
+                                'exercise_id' => $warmup->id,
+                                'weight' => rand(5, 10),
+                                'reps' => 8,
+                                'remarks' => 'Set ' . ($i + 1),
+                                'date' => now()->toDateString(),
+                            ]);
+                        }
                     }
-                }
 
-                // Add 5 other random (non-warmup) exercises, each repeated 3 times
-                $randomExercises = \App\Models\Exercise::where('category_id', '!=', 9)
-                    ->inRandomOrder()
-                    ->limit(5)
-                    ->get();
+                    // Add 5 other random (non-warmup) exercises, each repeated 3 times
+                    $randomExercises = \App\Models\Exercise::where('category_id', '!=', 9)
+                        ->inRandomOrder()
+                        ->limit(5)
+                        ->get();
 
-                foreach ($randomExercises as $exercise) {
-                    for ($i = 0; $i < 3; $i++) {
-                        $program->exercises()->create([
-                            'exercise_id' => $exercise->id,
-                            'weight' => rand(5, 10),
-                            'reps' => 8,
-                            'remarks' => 'Set ' . ($i + 1),
-                            'date' => now()->toDateString(),
-                        ]);
+                    foreach ($randomExercises as $exercise) {
+                        for ($i = 0; $i < 3; $i++) {
+                            $program->exercises()->create([
+                                'exercise_id' => $exercise->id,
+                                'weight' => rand(5, 10),
+                                'reps' => 8,
+                                'remarks' => 'Set ' . ($i + 1),
+                                'date' => now()->toDateString(),
+                            ]);
+                        }
                     }
                 }
             }
         }
 
-     $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')
-     ->whereIn('name', $recommendedNames)
-            ->get();
+        // Show both user's and default (user_id = 1) recommended programs
+            $program = Program::where('user_id','=', Auth::user()->id)->orWhere('user_id',  '=', '1')->get();
+
 
         return view('calculator.step3', ['userprof' => $userprof, 'program' => $program]);
     }
