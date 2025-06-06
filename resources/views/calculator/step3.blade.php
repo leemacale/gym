@@ -56,9 +56,9 @@
     
 
     <h1><b> Workout Recommendation </b></h1>
-<div class="grid justify-center grid-cols-1 gap-6 cards-wrapper md:grid-cols-2 lg:grid-cols-3">
+<div class="grid w-full grid-cols-1 gap-6 mt-6 cards-wrapper md:grid-cols-2 lg:grid-cols-3">
     @foreach ($program as $programs)
-        <div class="flex flex-col p-6 bg-white rounded-lg shadow card">
+        <div class="flex flex-col w-full h-full p-6 bg-white rounded-lg shadow card">
             <div class="flex flex-col items-center mb-4">
                 <h3 class="w-full text-lg font-bold text-center">{{ $programs->name }}</h3>
                 <div class="flex gap-2 mt-2">
@@ -68,31 +68,70 @@
             </div>
             <table class="min-w-full text-sm border">
                 <thead>
+                    @php
+                        $firstExercise = $programs->exercises->first();
+                        $isCardio = $firstExercise && $firstExercise->exercise->category && strtolower($firstExercise->exercise->category->name) === 'cardio';
+                    @endphp
                     <tr class="bg-gray-100">
                         <th class="px-2 py-1 border">Exercise</th>
-                        <th class="px-2 py-1 border">Weight</th>
-                        <th class="px-2 py-1 border">Reps</th>
+                        @if($isCardio)
+                            <th class="px-2 py-1 border">Resistance</th>
+                            <th class="px-2 py-1 border">Time (Seconds)</th>
+                        @else
+                            <th class="px-2 py-1 border">Weight</th>
+                            <th class="px-2 py-1 border">Reps</th>
+                        @endif
                         <th class="px-2 py-1 border">Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $lastExerciseName = null; @endphp
+                    @php 
+                        $lastExerciseName = null; 
+                        $lastIsCardio = null;
+                    @endphp
                     @forelse ($programs->exercises as $exercise)
+                        @php
+                            $isCardioRow = $exercise->exercise->category && strtolower($exercise->exercise->category->name) === 'cardio';
+                        @endphp
+
+                        {{-- Insert new header row if cardio/strength type changes --}}
+                        @if($lastIsCardio !== null && $lastIsCardio !== $isCardioRow)
+                            <tr class="font-bold bg-gray-100">
+                                <td class="px-2 py-1 border">Exercise</td>
+                                @if($isCardioRow)
+                                    <td class="px-2 py-1 border">Resistance</td>
+                                    <td class="px-2 py-1 border">Time (Seconds)</td>
+                                @else
+                                    <td class="px-2 py-1 border">Weight</td>
+                                    <td class="px-2 py-1 border">Reps</td>
+                                @endif
+                                <td class="px-2 py-1 border">Remarks</td>
+                            </tr>
+                        @endif
+
                         @if ($lastExerciseName !== null && $lastExerciseName !== $exercise->exercise->name)
                             <tr>
-                                <td colspan="4" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
+                                <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
                             </tr>
                         @endif
                         <tr>
                             <td class="px-2 py-1 border">{{ $exercise->exercise->name }}</td>
-                            <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
-                            <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                            @if($isCardioRow)
+                                <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
+                                <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                            @else
+                                <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
+                                <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                            @endif
                             <td class="px-2 py-1 border">{{ $exercise->remarks }}</td>
                         </tr>
-                        @php $lastExerciseName = $exercise->exercise->name; @endphp
+                        @php 
+                            $lastExerciseName = $exercise->exercise->name; 
+                            $lastIsCardio = $isCardioRow;
+                        @endphp
                     @empty
                         <tr>
-                            <td colspan="4" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
+                            <td colspan="5" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -107,99 +146,91 @@
     @endforeach
 </div>
 
-    <style>
-        h1 {
-            text-align: center;
-            margin: 30px 0;
-            font-size: larger;
-        }
+<style>
+    h1 {
+        text-align: center;
+        margin: 30px 0;
+        font-size: larger;
+    }
 
-        /* Flex container for cards */
+    .cards-wrapper {
+        width: 100%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
         .cards-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            /* Center horizontally on mobile */
-            justify-content: center;
-            /* Center vertically (optional) */
-            padding: 20px;
-            max-width: 1200px;
-            /* Limit max width on large screens */
-            margin: 0 auto;
-            /* Center container on large screens */
+            grid-template-columns: repeat(2, 1fr);
         }
+    }
+    @media (min-width: 1024px) {
+        .cards-wrapper {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 
-        @media (min-width: 768px) {
-            .cards-wrapper {
-                flex-direction: row;
-                justify-content: center;
-                align-items: stretch;
-                /* Stretch cards on large screens to equal height */
-            }
-        }
+    .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
 
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 350px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex: 1;
-        }
+    .card h2 {
+        margin-top: 0;
+        color: #333;
+    }
 
-        .card h2 {
-            margin-top: 0;
-            color: #333;
-        }
+    .exercise-list {
+        list-style: none;
+        padding-left: 0;
+    }
 
-        .exercise-list {
-            list-style: none;
-            padding-left: 0;
-        }
+    .exercise-list li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 10px;
+    }
 
-        .exercise-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
+    .exercise-list li::before {
+        content: '';
+        position: absolute;
+        top: 7px;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        background-color: #007BFF;
+        border-radius: 50%;
+    }
 
-        .exercise-list li::before {
-            content: '';
-            position: absolute;
-            top: 7px;
-            left: 0;
-            width: 8px;
-            height: 8px;
-            background-color: #007BFF;
-            border-radius: 50%;
-        }
+    .add-button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-        .add-button {
-            margin-top: 15px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    .add-button:hover {
+        background-color: #0056b3;
+    }
 
-        .add-button:hover {
-            background-color: #0056b3;
-        }
-
-        .message {
-            color: green;
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+    .message {
+        color: green;
+        font-size: 14px;
+        margin-top: 10px;
+        display: none;
+    }
+</style>
 </x-app-layout>

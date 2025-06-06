@@ -28,24 +28,72 @@
                     </div>
                     <table class="min-w-full text-sm border">
                         <thead>
+                            @php
+                                $firstExercise = $programs->exercises->first();
+                                $isCardio = $firstExercise && $firstExercise->exercise->category && strtolower($firstExercise->exercise->category->name) === 'cardio';
+                            @endphp
                             <tr class="bg-gray-100">
                                 <th class="px-2 py-1 border">Exercise</th>
-                                <th class="px-2 py-1 border">Weight</th>
-                                <th class="px-2 py-1 border">Reps</th>
+                                @if($isCardio)
+                                    <th class="px-2 py-1 border">Resistance</th>
+                                    <th class="px-2 py-1 border">Time (Seconds)</th>
+                                @else
+                                    <th class="px-2 py-1 border">Weight</th>
+                                    <th class="px-2 py-1 border">Reps</th>
+                                @endif
                                 <th class="px-2 py-1 border">Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php 
+                                $lastExerciseName = null; 
+                                $lastIsCardio = null;
+                            @endphp
                             @forelse ($programs->exercises as $exercise)
+                                @php
+                                    $isCardioRow = $exercise->exercise->category && strtolower($exercise->exercise->category->name) === 'cardio';
+                                @endphp
+
+                                {{-- Insert new header row if cardio/strength type changes --}}
+                                @if($lastIsCardio !== null && $lastIsCardio !== $isCardioRow)
+                                    <tr class="font-bold bg-gray-100">
+                                        <td class="px-2 py-1 border">Exercise</td>
+                                        @if($isCardioRow)
+                                            <td class="px-2 py-1 border">Resistance</td>
+                                            <td class="px-2 py-1 border">Time (Seconds)</td>
+                                        @else
+                                            <td class="px-2 py-1 border">Weight</td>
+                                            <td class="px-2 py-1 border">Reps</td>
+                                        @endif
+                                        <td class="px-2 py-1 border">Remarks</td>
+                                    </tr>
+                                @endif
+
+                                {{-- Separator only when the exercise is different --}}
+                                @if($lastExerciseName !== null && $lastExerciseName !== $exercise->exercise->name)
+                                    <tr>
+                                        <td colspan="5" class="border-t-2 border-b-0 border-l-0 border-r-0"></td>
+                                    </tr>
+                                @endif
+
                                 <tr>
                                     <td class="px-2 py-1 border">{{ $exercise->exercise->name }}</td>
-                                    <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
-                                    <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                                    @if($isCardioRow)
+                                        <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
+                                        <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                                    @else
+                                        <td class="px-2 py-1 border">{{ $exercise->weight }}</td>
+                                        <td class="px-2 py-1 border">{{ $exercise->reps }}</td>
+                                    @endif
                                     <td class="px-2 py-1 border">{{ $exercise->remarks }}</td>
                                 </tr>
+                                @php 
+                                    $lastExerciseName = $exercise->exercise->name; 
+                                    $lastIsCardio = $isCardioRow;
+                                @endphp
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
+                                    <td colspan="5" class="px-2 py-1 text-center text-gray-400 border">No exercises</td>
                                 </tr>
                             @endforelse
                         </tbody>

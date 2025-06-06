@@ -22,8 +22,7 @@ class WorkoutController extends Controller
     public function index()
     {
 
-            $program = Program::get();
-
+                  $program = Program::where('user_id','=', Auth::user()->id)->get();
         $mytime = Carbon::now();
         $now = $mytime->toDateString();
         $date = request()->date;
@@ -63,7 +62,7 @@ class WorkoutController extends Controller
     public function add()
     {
         $exercise = Exercise::get();
-            $program = Program::get();
+                    $program = Program::where('user_id','=', Auth::user()->id)->get();
 
         return view('workout.add', [
             'exercise' => $exercise,
@@ -82,8 +81,7 @@ class WorkoutController extends Controller
 
     public function addlog(Exercise $exercises)
     {
-            $program = Program::get();
-
+               $program = Program::where('user_id','=', Auth::user()->id)->get();
         return view('workout.addlog', [
             'exercise' => $exercises,
             'program' => $program
@@ -231,7 +229,7 @@ class WorkoutController extends Controller
     public function edit(workout $workouts)
     {
         //
-         $program = Program::get();
+              $program = Program::where('user_id','=', Auth::user()->id)->get();
 
         return view('workout.edit', [
             'workouts' => $workouts,
